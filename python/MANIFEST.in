@@ -1,0 +1,27 @@
+exclude .gitignore
+exclude .coverage
+exclude .coveragerc
+exclude .travis.yml
+include setup.cfg
+include ../README.md
+include ../LICENSE
+include ../c/src/numkey/hex.h
+include ../c/src/numkey/numkey.h
+include numkey/pynumkey.h
+prune .cache
+prune .git
+prune build
+prune dist
+prune htmlcov
+recursive-exclude *.egg-info *
+recursive-include test *
+
+
+
+
+
+
+
+
+
+
