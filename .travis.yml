@@ -38,7 +38,7 @@ matrix:
         - make go
     - language: python
       script:
-        - make python
+        - cd python && make clean build
     - language: node_js
       node_js:
         - "7"

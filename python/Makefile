@@ -29,11 +29,12 @@ help:
 	@echo "The following commands are available:"
 	@echo ""
 	@echo "    make build   : Build and test the library"
+	@echo "    make vbuild  : Build and test the library inside a virtualenv"
 	@echo "    make format  : Format the source code"
 	@echo "    make clean   : Remove any build artifact"
 	@echo ""
 
-all: clean build
+all: clean vbuild
 
 
 # Set the version from VERSION file
@@ -42,11 +43,16 @@ version:
 	sed -i "s/version=.*,$$/version=\"$(VERSION).$(RELEASE)\",/" setup.py
 
 # Build and test the package
-.PHONY: build
-build: clean version
+.PHONY: vbuild
+vbuild: clean version
 	rm -rf venv
 	virtualenv -p /usr/bin/python3 venv
 	source venv/bin/activate && python --version && pip install --pre black && pip install -e .[test] && python setup.py sdist bdist_wheel install test
+
+# Build and test the package
+.PHONY: build
+vbuild: clean version
+	pip install -e .[test] && python setup.py sdist bdist_wheel install test
 
 # Generate source code documentation
 .PHONY: doc
