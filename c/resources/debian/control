@@ -1,0 +1,18 @@
+Source: ~#PKGNAME#~
+Maintainer: Support <ops@nexmo.com>
+Section: utils
+Priority: optional
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.7
+Homepage: https://github.com/nexmoinc/numkey
+Vcs-Git: https://github.com/nexmoinc/numkey.git
+
+Package: ~#PKGNAME#~
+Provides: numkey
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Numerical Encoding for Short Codes.
+ Provides C header-only files for:
+ NumKey, a reversible numerical encoding for Short Codes
+ and E.164 numbers.
+ 
