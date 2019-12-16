@@ -36,6 +36,8 @@ matrix:
       script:
         - make go
     - language: python
+      install:
+        - pip install black
       script:
         - make python
     - language: node_js
