@@ -41,12 +41,12 @@ all: clean build
 version:
 	sed -i "s/version=.*,$$/version=\"$(VERSION).$(RELEASE)\",/" setup.py
 
-# Build a Wheel package
+# Build and test the package
 .PHONY: build
 build: clean version
 	rm -rf venv
-	virtualenv -p /usr/bin/python3 venv
-	source venv/bin/activate && pip install -e .[test] && python setup.py sdist bdist_wheel install test
+	virtualenv -p /usr/bin/python3.6 venv
+	source venv/bin/activate && pip3 install -e .[test] && python3 setup.py sdist bdist_wheel install test
 
 # Generate source code documentation
 .PHONY: doc
