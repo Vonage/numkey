@@ -51,7 +51,7 @@ vbuild: clean version
 
 # Build and test the package
 .PHONY: build
-vbuild: clean version
+build: clean version
 	pip install -e .[test] && python setup.py sdist bdist_wheel install test
 
 # Generate source code documentation
