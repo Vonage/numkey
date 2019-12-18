@@ -26,6 +26,9 @@ addons:
 install:
   - gem install coveralls-lcov
 
+script:
+  - echo "$TRAVIS_BUILD_NUMBER" > RELEASE
+
 matrix:
   include:
     - language: c
