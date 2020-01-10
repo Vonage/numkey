@@ -49,4 +49,7 @@ matrix:
         - npm install --global uglify-js js-beautify
       script:
         - make javascript
+    - language: java
+      script:
+        - make java
       
