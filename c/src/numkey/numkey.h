@@ -162,7 +162,8 @@ static inline int8_t compare_uint64_t(uint64_t a, uint64_t b)
     return (a < b) ? -1 : (a > b);
 }
 
-/** @brief Compares two NumKeys by country only.
+/**
+ * Compares two NumKeys by country only.
  *
  * @param nka    The first NumKey to be compared.
  * @param nkb    The second NumKey to be compared.
@@ -190,7 +191,8 @@ static inline size_t numkey_hex(uint64_t nk, char *str)
     return hex_uint64_t(nk, str);
 }
 
-/** @brief Parses a NumKey hexadecimal string and returns the code.
+/**
+ * Parses a NumKey hexadecimal string and returns the code.
  *
  * @param ns NumKey hexadecimal string (it must contain 16 hexadecimal characters).
  *
