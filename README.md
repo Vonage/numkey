@@ -22,6 +22,7 @@
 * [GO Library](#golib)
 * [Python Module](#pythonlib)
 * [Javascript library](#jslib)
+* [Java library](#java)
 
 -----------------------------------------------------------------
 
@@ -239,3 +240,8 @@ Use the "`make python`" command to test the Python wrapper and generate reports.
 ## Javascript library (limited support)
 
 Use the "`make javascript`" command to test and minify the Javascript implementation.
+
+
+<a name="java"></a>
+## Java library (limited support)
+
