@@ -26,6 +26,7 @@ help:
 	@echo "    make go           : Build and test the GO version"
 	@echo "    make javascript   : Build and test the Javascript version"
 	@echo "    make python       : Build and test the Python version"
+	@echo "    make java         : Build and test the Java version"
 	@echo "    make clean        : Remove any build artifact"
 	@echo "    make dbuild       : Build everything inside a Docker container"
 	@echo ""
@@ -52,6 +53,11 @@ javascript:
 python:
 	cd python && make all
 
+# Build and test the Java version
+.PHONY: java
+java:
+	cd java && make all
+
 # Remove any build artifact
 .PHONY: clean
 clean:
@@ -60,6 +66,7 @@ clean:
 	cd go && make clean
 	cd javascript && make clean
 	cd python && make clean
+	cd java && make clean
 
 # Build everything inside a Docker container
 .PHONY: dbuild
