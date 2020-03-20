@@ -23,6 +23,7 @@ help:
 	@echo "The following commands are available:"
 	@echo ""
 	@echo "    make c            : Build and test the C version"
+	@echo "    make cgo          : Build and test the GO C-wrapper version"
 	@echo "    make go           : Build and test the GO version"
 	@echo "    make javascript   : Build and test the Javascript version"
 	@echo "    make python       : Build and test the Python version"
@@ -31,12 +32,17 @@ help:
 	@echo "    make dbuild       : Build everything inside a Docker container"
 	@echo ""
 
-all: clean c go javascript python
+all: clean c cgo go javascript python
 
 # Build and test the C version
 .PHONY: c
 c:
 	cd c && make all
+
+# Build and test the CGO version
+.PHONY: cgo
+cgo:
+	cd cgo && make all
 
 # Build and test the GO version
 .PHONY: go
@@ -63,6 +69,7 @@ java:
 clean:
 	rm -rf target
 	cd c && make clean
+	cd cgo && make clean
 	cd go && make clean
 	cd javascript && make clean
 	cd python && make clean
@@ -84,6 +91,8 @@ pubdocs:
 	rm -rf ./target/gh-pages
 	mkdir -p ./target/DOCS/c
 	cp -r ./c/target/build/doc/html/* ./target/DOCS/c/
+	mkdir -p ./target/DOCS/cgo
+	cp -r ./cgo/target/docs/* ./target/DOCS/cgo/
 	mkdir -p ./target/DOCS/go
 	cp -r ./go/target/docs/* ./target/DOCS/go/
 	mkdir -p ./target/DOCS/python

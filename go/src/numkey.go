@@ -1,87 +1,131 @@
-// Package numkey is a Go wrapper for the numkey C software library.
-// 64 bit Encoding for Short Codes and E.164 LVN.
+// Package numkey provides 64 bit Encoding for Short Codes and E.164 LVN.
 //
 // @category   Libraries
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2019 Vonage
+// @copyright  2019-2020 Vonage
 // @license    see LICENSE file
 // @link       https://github.com/nexmoinc/numkey
 package numkey
 
-/*
-#cgo CFLAGS: -O3 -pedantic -std=c99 -Wextra -Wno-strict-prototypes -Wcast-align -Wundef -Wformat-security -Wshadow
-#include <stdlib.h>
-#include <inttypes.h>
-#include "../../c/src/numkey/binsearch.h"
-#include "../../c/src/numkey/hex.h"
-#include "../../c/src/numkey/numkey.h"
-*/
-import "C"
-import "unsafe"
+import (
+	"strconv"
+	"strings"
+)
 
-// TNumKey contains the number components
-type TNumKey struct {
-	Country string `json:"country"`
-	Number  string `json:"number"`
+// NkbmaskCountryFl is the bit mask for the ISO 3166 alpha-2 country code first letter  [ 11111000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 ]
+const NkbmaskCountryFl = 0xF800000000000000
+
+// NkbmaskCountrySl is it mask for the ISO 3166 alpha-2 country code second letter [ 00000111 11000000 00000000 00000000 00000000 00000000 00000000 00000000 ]
+const NkbmaskCountrySl = 0x07C0000000000000
+
+// NkbmaskNumber is the bit mask for the short code or E.164 number (max 15 digits) [ 00000000 00111111 11111111 11111111 11111111 11111111 11111111 11110000 ]
+const NkbmaskNumber = 0x003FFFFFFFFFFFF0
+
+// NkbmaskLength is the bit mask for the number length [ 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00001111 ]
+const NkbmaskLength = 0x000000000000000F
+
+// NkbshiftCountryFl is the country first letter LSB position from the NumKey LSB
+const NkbshiftCountryFl = 59
+
+// NkbshiftCountrySl is the country second letter LSB position from the NumKey LSB
+const NkbshiftCountrySl = 54
+
+// NkbshiftNumber is the number LSB position from the NumKey LSB
+const NkbshiftNumber = 4
+
+// NkcshiftChar is value shift to encode characters to numbers (A=1, ..., Z=26)
+const NkcshiftChar = 64
+
+// encodeChar encodes the input character to a numeric value.
+// NOTE: This is safe to be used only with A to Z characters.
+func encodeChar(c byte) uint64 {
+	return uint64(int(c) - NkcshiftChar)
 }
 
-// castCNumKey convert C numkey_t to GO TNumKey.
-func castCNumKey(nk C.numkey_t) TNumKey {
-	return TNumKey{
-		Country: C.GoString((*C.char)(unsafe.Pointer(&nk.country[0]))),
-		Number:  C.GoString((*C.char)(unsafe.Pointer(&nk.number[0]))),
+// encodeCountry encodes the country code.
+// The country parameter must be an ISO 3166 alpha-2 country code.
+// Returns 0 in case of error
+func encodeCountry(country string) uint64 {
+	return ((encodeChar(country[0]) << NkbshiftCountryFl) | (encodeChar(country[1]) << NkbshiftCountrySl))
+}
+
+// decodeCountry decodes the country code into 2-byte string.
+func decodeCountry(nk uint64) string {
+	return string([]byte{
+		byte(((nk & NkbmaskCountryFl) >> NkbshiftCountryFl) + NkcshiftChar),
+		byte(((nk & NkbmaskCountrySl) >> NkbshiftCountrySl) + NkcshiftChar),
+	})
+}
+
+// encodeNumber encodes a number string.
+func encodeNumber(number string) uint64 {
+	num, err := strconv.ParseUint(number, 10, 64)
+	if err != nil {
+		return 0
 	}
+	return ((num << NkbshiftNumber) | ((uint64)(len(number)) & NkbmaskLength))
 }
 
-// StringToNTBytesN convert a string to byte array allocating "size" bytes.
-func StringToNTBytesN(s string, size int) []byte {
-	b := make([]byte, size)
-	copy(b[:], s)
-	return b
+// func decodeNumber decodes a number into a string
+func decodeNumber(nk uint64) string {
+	size := int(nk & NkbmaskLength)
+	s := strconv.FormatUint(((nk & NkbmaskNumber) >> NkbshiftNumber), 10)
+	slen := len(s)
+	if slen < size {
+		return strings.Repeat("0", (size-slen)) + s
+	}
+	return s
 }
 
 // NumKey returns an encoded COUNTRY + NUMBER
-// If the country or number are invalid this function returns 0
 func NumKey(country, number string) uint64 {
-	countrysize := len(country)
-	numsize := len(number)
-	if countrysize != 2 || numsize < 1 || numsize > 15 {
-		// E.164 support max 15 digits
-		return 0
+	size := len(number)
+	if len(country) != 2 || size < 1 || size > 15 {
+		return 0 // E.164 support max 15 digits
 	}
-	bcountry := StringToNTBytesN(country, countrysize+1)
-	bnumber := StringToNTBytesN(number, numsize+1)
-	pcountry := unsafe.Pointer(&bcountry[0]) // #nosec
-	pnumber := unsafe.Pointer(&bnumber[0])   // #nosec
-	return uint64(C.numkey((*C.char)(pcountry), (*C.char)(pnumber), C.size_t(numsize)))
+	return (encodeCountry(country) | encodeNumber(number))
 }
 
 // DecodeNumKey parses a numkey string and returns the components as TNumKey structure.
-func DecodeNumKey(nk uint64) TNumKey {
+// Return country and number strings.
+func DecodeNumKey(nk uint64) (string, string) {
 	if nk == 0 {
-		return TNumKey{}
+		return "", ""
 	}
-	var data C.numkey_t
-	C.decode_numkey(C.uint64_t(nk), &data)
-	return castCNumKey(data)
+	return decodeCountry(nk), decodeNumber(nk)
+}
+
+func compareUint64(a, b uint64) int {
+	if a < b {
+		return -1
+	}
+	if a > b {
+		return 1
+	}
+	return 0
 }
 
 // CompareNumKeyCountry compares two NumKeys by country only.
 func CompareNumKeyCountry(nka, nkb uint64) int {
-	return int(C.compare_numkey_country(C.uint64_t(nka), C.uint64_t(nkb)))
+	return compareUint64((nka >> NkbshiftCountrySl), (nkb >> NkbshiftCountrySl))
 }
 
 // Hex provides a 16 digits hexadecimal string representation of a 64bit unsigned number.
 func Hex(v uint64) string {
-	cstr := C.malloc(17)
-	defer C.free(unsafe.Pointer(cstr)) // #nosec
-	C.numkey_hex(C.uint64_t(v), (*C.char)(cstr))
-	return C.GoStringN((*C.char)(cstr), C.int(16))
+	s := strconv.FormatUint(v, 16)
+	slen := len(s)
+	if slen < 16 {
+		return strings.Repeat("0", (16-slen)) + s
+	}
+	return s
 }
 
 // ParseHex parses a 16 digit HEX string and returns the 64 bit unsigned number.
+// return 0 in case of error
 func ParseHex(s string) uint64 {
-	b := StringToNTBytesN(s, len(s)+1)
-	p := unsafe.Pointer(&b[0]) // #nosec
-	return uint64(C.parse_numkey_hex((*C.char)(p)))
+	num, err := strconv.ParseUint(s, 16, 64)
+	if err != nil {
+		return 0
+	}
+	return num
 }

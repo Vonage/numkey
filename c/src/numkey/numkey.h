@@ -50,7 +50,7 @@ typedef struct numkey_t
 
 /**
  * Encodes the input character to a numeric value.
- * NOTE: This is safe to be used only with A-Z characters.
+ * NOTE: This is safe to be used only with A to Z characters.
  *
  * @param c Character to encode
  *

@@ -38,6 +38,7 @@ matrix:
       #  - coveralls-lcov /home/travis/build/nexmoinc/numkey/c/target/test/coverage/numkey.info
     - language: go
       script:
+        - make cgo
         - make go
     - language: python
       script:

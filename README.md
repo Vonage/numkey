@@ -19,6 +19,7 @@
     * [Properties](#properties)
 * [Quick Start](#quickstart)
 * [C Library](#clib)
+* [CGO Library](#cgolib)
 * [GO Library](#golib)
 * [Python Module](#pythonlib)
 * [Javascript library](#jslib)
@@ -216,14 +217,24 @@ The code inside the `c/nk` folder is used to generate the `nk` command line tool
 This tools requires the positional arguments `COUNTRY`, `NUMBER` and returns the NumKey in hexadecimal representation.
 
 
+<a name="cgolib"></a>
+## Go Library C wrapper
+
+* [Go source code documentation](https://nexmoinc.github.io/numkey/cgo/index.html)
+* [Go Usage Examples](cgo/example/main.go)
+
+A go wrapper is located in the `cgo` directory.  
+Use the "`make cgo`" command to test the GO wrapper and generate reports.
+
+
 <a name="golib"></a>
 ## Go Library (golang)
 
 * [Go source code documentation](https://nexmoinc.github.io/numkey/go/index.html)
 * [Go Usage Examples](go/example/main.go)
 
-A go wrapper is located in the `go` directory.  
-Use the "`make go`" command to test the GO wrapper and generate reports.
+A native Go implementation is located in the `go` directory.  
+Use the "`make go`" command to test the GO version and generate reports.
 
 
 <a name="pythonlib"></a>

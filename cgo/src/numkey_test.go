@@ -737,12 +737,12 @@ func BenchmarkNumKey(b *testing.B) {
 }
 
 func TestDecodeNumKeyError(t *testing.T) {
-	country, number := DecodeNumKey(0)
-	if country != "" {
-		t.Errorf("The country hash value is different, expected empty string got: %#v", country)
+	data := DecodeNumKey(0)
+	if data.Country != "" {
+		t.Errorf("The country hash value is different, expected empty string got: %#v", data.Country)
 	}
-	if number != "" {
-		t.Errorf("The number hash value is different, expected empty string got: %#v", number)
+	if data.Number != "" {
+		t.Errorf("The number hash value is different, expected empty string got: %#v", data.Number)
 	}
 }
 
@@ -751,12 +751,12 @@ func TestDecodeNumKey(t *testing.T) {
 		v := v
 		t.Run("", func(t *testing.T) {
 			t.Parallel()
-			country, number := DecodeNumKey(v.nk)
-			if country != v.country {
-				t.Errorf("The country hash value is different, expected %#v got: %#v", v.country, country)
+			data := DecodeNumKey(v.nk)
+			if data.Country != v.country {
+				t.Errorf("The country hash value is different, expected %#v got: %#v", v.country, data.Country)
 			}
-			if number != v.number {
-				t.Errorf("The number hash value is different, expected %#v got: %#v", v.number, number)
+			if data.Number != v.number {
+				t.Errorf("The number hash value is different, expected %#v got: %#v", v.number, data.Number)
 			}
 		})
 	}
