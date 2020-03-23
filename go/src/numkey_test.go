@@ -716,6 +716,20 @@ func TestNumKeyError(t *testing.T) {
 	}
 }
 
+func TestEncodeNumberError(t *testing.T) {
+	n := encodeNumber("ERR")
+	if n != 0 {
+		t.Errorf("Expected 0 got: %#v", n)
+	}
+}
+
+func TestParseHexError(t *testing.T) {
+	n := ParseHex("X")
+	if n != 0 {
+		t.Errorf("Expected 0 got: %#v", n)
+	}
+}
+
 func TestNumKey(t *testing.T) {
 	for _, v := range numkeyTestData {
 		v := v
