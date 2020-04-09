@@ -57,7 +57,7 @@ func decodeCountry(nk uint64) string {
 	})
 }
 
-// encodeNumber encodes a number string.
+// encodeNumber encodes a number string (shortcode or E.164).
 func encodeNumber(number string) uint64 {
 	num, err := strconv.ParseUint(number, 10, 64)
 	if err != nil {
