@@ -752,6 +752,20 @@ int test_numkey()
     return errors;
 }
 
+int test_numkey_long()
+{
+    int errors = 0;
+    int i;
+    uint64_t nk;
+    nk = numkey("XX", "9876543210987654321", 19);
+    if (nk != 0xc61ee0c29f50cb10)
+    {
+        fprintf(stderr, "%s: Unexpected numkey: expected 0xc61ee0c29f50cb10, got 0x%016" PRIx64 "\n", __func__, nk);
+        ++errors;
+    }
+    return errors;
+}
+
 void benchmark_numkey()
 {
     uint64_t tstart, tend;
@@ -784,6 +798,25 @@ int test_decode_numkey()
             fprintf(stderr, "%s (%d): Unexpected number: expected %s, got %s\n", __func__, i, test_data[i].number, h.number);
             ++errors;
         }
+    }
+    return errors;
+}
+
+int test_decode_numkey_long()
+{
+    int errors = 0;
+    int i;
+    numkey_t h = {0};
+    decode_numkey(0xc61ee0c29f50cb10, &h);
+    if (strcmp(h.country, "XX") != 0)
+    {
+        fprintf(stderr, "%s: Unexpected country: expected 'XX', got %s\n", __func__, h.country);
+        ++errors;
+    }
+    if (strcmp(h.number, "") != 0)
+    {
+        fprintf(stderr, "%s: Unexpected number: expected '', got %s\n", __func__, h.number);
+        ++errors;
     }
     return errors;
 }
@@ -921,7 +954,9 @@ int main()
     //gentestmap(); return 1;
 
     errors += test_numkey();
+    errors += test_numkey_long();
     errors += test_decode_numkey();
+    errors += test_decode_numkey_long();
     errors += test_compare_numkey_country();
     errors += test_numkey_hex();
     errors += test_parse_numkey_hex();

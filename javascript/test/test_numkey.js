@@ -2749,6 +2749,17 @@ function test_numKey() {
     return errors;
 }
 
+function test_numKey_long() {
+    var errors = 0;
+    var nk;
+    nk = numKey("XX", "9876543210987654321");
+    if ((nk.hi != 3323912386) || (nk.lo != 2672872208)) {
+        console.error("Unexpected numkey: expected { hi: 3323912386, lo: 2672872208 }, got ", nk);
+        ++errors;
+    }
+    return errors;
+}
+
 function test_decodeNumKey() {
     var errors = 0;
     var i;
@@ -2763,6 +2774,24 @@ function test_decodeNumKey() {
             console.error("(", i, "): Unexpected number: expected ", test_data[i][1], ", got ", h.number);
             ++errors;
         }
+    }
+    return errors;
+}
+
+function test_decodeNumKey_long() {
+    var errors = 0;
+    var h;
+    h = decodeNumKey({
+        "hi": 3323912386,
+        "lo": 2672872208
+    });
+    if (h.country != "XX") {
+        console.error("Unexpected country: expected 'XX', got ", h.country);
+        ++errors;
+    }
+    if (h.number != "") {
+        console.error("Unexpected number: expected '', got ", h.number);
+        ++errors;
     }
     return errors;
 }
@@ -2846,7 +2875,9 @@ var errors = 0;
 //gentestmap();
 
 errors += test_numKey();
+errors += test_numKey_long();
 errors += test_decodeNumKey();
+errors += test_decodeNumKey_long();
 errors += test_compareNumKeyCountry();
 errors += test_numKeyString();
 errors += test_parseHex();

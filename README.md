@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.com/nexmoinc/numkey.svg?token=YHpDM41jM29w1XFFg2HR&branch=master)](https://travis-ci.com/nexmoinc/numkey?token=YHpDM41jM29w1XFFg2HR&branch=master)
 
 * **category**    Library
-* **copyright**   2019 Vonage
+* **copyright**   2019-2020 Vonage
 * **license**     see [LICENSE](LICENSE)
 * **link**        https://github.com/nexmoinc/numkey
 
@@ -136,6 +136,11 @@ Example of NumKey encoding:
 
          Binary mask: 0x000000000000000F hex
     ```
+
+### Long non-standard numbers
+
+If a non-standard number is longer than the E.164 supported 15 digits, than the LENGHT is set to zero and the number is truncated to include only the last 15 digits.
+These keys are nor directly reversible and require a lookup-table.
 
 
 <a name="properties"></a>

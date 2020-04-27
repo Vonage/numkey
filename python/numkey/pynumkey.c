@@ -31,7 +31,7 @@ static PyObject* py_numkey(PyObject *Py_UNUSED(ignored), PyObject *args, PyObjec
     static char *kwlist[] = {"country", "number", NULL};
     if (!PyArg_ParseTupleAndKeywords(args, keywds, "s#s#", kwlist, &country, &sizecountry, &number, &sizenumber))
         return NULL;
-    if (sizecountry != 2 || sizenumber < 1 || sizenumber > 15)
+    if (sizecountry != 2 || sizenumber < 1)
     {
         return Py_BuildValue("K", 0);
     }

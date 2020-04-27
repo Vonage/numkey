@@ -4,7 +4,7 @@
  * 
  * @category   Libraries
  * @author     Nicola Asuni <nicola.asuni@vonage.com>
- * @copyright  2019 Vonage
+ * @copyright  2019-2020 Vonage
  * @license    see LICENSE file
  * @link       https://github.com/nexmoinc/numkey
  */
@@ -33,7 +33,9 @@ var NKCSHIFT_CHAR = 64 //!< Value shift to encode characters to numbers (A=1, ..
 var NKNUMDIV = 0x10000000 //!< = [2^28] divider to get the number HI bits
 var NKNUMMUL = 0x100000000 //!< = [2^32] multiplier to set the number HI bits
 
-var NKZEROSHIFT = 48 // ASCII code of the '0' character
+var NKZEROSHIFT = 48 //!< ASCII code of the '0' character
+
+var NKNUMMAXLEN = 15 //!< Maximum number length for E.164 and key reversibility
 
 function encodeChar(c) {
     return ((c - NKCSHIFT_CHAR) >>> 0)
@@ -49,7 +51,7 @@ function decodeCountry(nk) {
 
 function encodeNumber(number) {
     var size = number.length;
-    if (size <= 0 || size > 15) {
+    if (size < 1) {
         return {
             "hi": 0,
             "lo": 0
@@ -57,19 +59,27 @@ function encodeNumber(number) {
     }
     var num = 0; // 53 bit precision
     var b;
-    var i;
-    for (i = 0; i < size; i++) {
+    var i, j = 0;
+    var len = size;
+    if (size > NKNUMMAXLEN) {
+        j = (size - NKNUMMAXLEN); // last 15 digits
+        len = 0; // flag non-revesible encoding
+    }
+    for (i = j; i < size; i++) {
         b = (number.charCodeAt(i) - NKZEROSHIFT);
         num = (num * 10) + b;
     }
     return {
         "hi": ((((num / NKNUMDIV) >>> 0) & NKBMASK_NUMBER_HI) >>> 0),
-        "lo": ((((num << NKBSHIFT_NUMBER_LO) >>> 0) | ((size & NKBMASK_LENGTH) >>> 0)) >>> 0)
+        "lo": ((((num << NKBSHIFT_NUMBER_LO) >>> 0) | ((len & NKBMASK_LENGTH) >>> 0)) >>> 0)
     };
 }
 
 function decodeNumber(nk) {
     var size = (nk.lo & NKBMASK_LENGTH) >>> 0;
+    if (size == 0) {
+        return "";
+    }
     var number = new Array(size);
     var numhi = ((nk.hi & NKBMASK_NUMBER_HI) >>> 0);
     var numlo = ((nk.lo & NKBMASK_NUMBER_LO) >>> 0);

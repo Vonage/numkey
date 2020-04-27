@@ -26,11 +26,24 @@ public class NumKeyTest {
     }
 
     @Test
+    public void numkeyLong() {
+        long h = NumKey.numkey("XX", "9876543210987654321");
+        assertEquals(-4170649078397351152L, h);
+    }
+
+    @Test
     @Parameters(method = "testNumKey_Parameters")
     public void decodeNumkeyStr(String country, String number, long nk, String ns) throws Throwable {
         NumKey.NumDataStr h = NumKey.decodeNumkeyStr(nk);
         assertEquals(country, h.country);
         assertEquals(number, h.number);
+    }
+
+    @Test
+    public void decodeNumkeyLong() {
+        NumKey.NumDataStr h = NumKey.decodeNumkeyStr(-4170649078397351152L);
+        assertEquals("XX", h.country);
+        assertEquals("", h.number);
     }
 
     @Test

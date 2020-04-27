@@ -700,7 +700,6 @@ var numkeyTestDataError = []TNumKeyData{
 	{"", "", 0x0, "0"},
 	{"", "123456", 0x0, "0"},
 	{"AA", "", 0x0, "0"},
-	{"AA", "1234567890123456", 0x0, "0"},
 }
 
 func TestNumKeyError(t *testing.T) {
@@ -743,6 +742,13 @@ func TestNumKey(t *testing.T) {
 	}
 }
 
+func TestNumKeyLong(t *testing.T) {
+	nk := NumKey("XX", "9876543210987654321")
+	if nk != 0xc61ee0c29f50cb10 {
+		t.Errorf("The code value is different, expected 0xc61ee0c29f50cb10 got %#v", nk)
+	}
+}
+
 func BenchmarkNumKey(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -773,6 +779,16 @@ func TestDecodeNumKey(t *testing.T) {
 				t.Errorf("The number hash value is different, expected %#v got: %#v", v.number, number)
 			}
 		})
+	}
+}
+
+func TestDecodeNumKeyLong(t *testing.T) {
+	country, number := DecodeNumKey(0xc61ee0c29f50cb10)
+	if country != "XX" {
+		t.Errorf("The country hash value is different, expected 'XX' got: %#v", country)
+	}
+	if number != "" {
+		t.Errorf("The number hash value is different, expected '' got: %#v", number)
 	}
 }
 
