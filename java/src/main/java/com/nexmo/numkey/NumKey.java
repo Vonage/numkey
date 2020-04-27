@@ -13,6 +13,7 @@ public class NumKey {
     private final static byte NKBSHIFT_COUNTRY_SL = 54; //!< COUNTRY second letter LSB position from the NumKey LSB
     private final static byte NKBSHIFT_NUMBER = 4; //!< NUMBER LSB position from the NumKey LSB
     private final static byte NKCSHIFT_CHAR = 64; //!< Value shift to encode characters to numbers (A=1, ..., Z=26)
+    private final static byte NKNUMMAXLEN = 15; //!< Maximum number length for E.164 and key reversibility
 
     public static class NumData {
         public byte[] country;
@@ -67,12 +68,17 @@ public class NumKey {
     private static long encodeNumber(byte[] number) {
         long num = 0;
         int b;
-        int i;
-        for (i = 0; i < number.length; i++) {
+        int i, j = 0;
+        int len = number.length;
+        if (len > NKNUMMAXLEN) {
+            j = (len - NKNUMMAXLEN); // last 15 digits
+            len = 0;                 // flag non-revesible encoding
+        }
+        for (i = j; i < number.length; i++) {
             b = (int) number[i] - '0';
             num = (num * 10) + b;
         }
-        return ((num << NKBSHIFT_NUMBER) | ((long) (number.length) & NKBMASK_LENGTH));
+        return ((num << NKBSHIFT_NUMBER) | (len & NKBMASK_LENGTH));
     }
 
     /**

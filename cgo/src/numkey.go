@@ -3,7 +3,7 @@
 //
 // @category   Libraries
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2019 Vonage
+// @copyright  2019-2020 Vonage
 // @license    see LICENSE file
 // @link       https://github.com/nexmoinc/numkey
 package numkey
@@ -44,8 +44,8 @@ func StringToNTBytesN(s string, size int) []byte {
 func NumKey(country, number string) uint64 {
 	countrysize := len(country)
 	numsize := len(number)
-	if countrysize != 2 || numsize < 1 || numsize > 15 {
-		return 0 // E.164 support max 15 digits
+	if countrysize != 2 || numsize < 1 {
+		return 0
 	}
 	bcountry := StringToNTBytesN(country, countrysize+1)
 	bnumber := StringToNTBytesN(number, numsize+1)

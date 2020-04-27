@@ -4,7 +4,7 @@
 //
 // @category   Libraries
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2019 Vonage
+// @copyright  2019-2020 Vonage
 // @license    see LICENSE file
 // @link       https://github.com/nexmoinc/numkey
 
@@ -37,6 +37,8 @@
 #define NKSLENGTH_NUMBER    16 //!< Number of characters in the number code + NULL terminator
 
 #define NKCSHIFT_CHAR       64 //!< Value shift to encode characters to numbers (A=1, ..., Z=26)
+
+#define NKNUMMAXLEN         15 //!< Maximum number length for E.164 and key reversibility
 
 /**
  * NumKey struct.
@@ -98,13 +100,19 @@ static inline uint64_t encode_number(const char *number, size_t size)
 {
     uint64_t num = 0;
     uint8_t b;
-    size_t i;
-    for (i = 0; i < size; i++)
+    size_t i, j = 0;
+    uint64_t len = (uint64_t)(size);
+    if (size > NKNUMMAXLEN)
+    {
+        j = (size - NKNUMMAXLEN); // last 15 digits
+        len = 0;                  // flag non-revesible encoding
+    }
+    for (i = j; i < size; i++)
     {
         b = (uint8_t)number[i] - '0';
         num = (num * 10) + b;
     }
-    return ((num << NKBSHIFT_NUMBER) | ((uint64_t)(size) & NKBMASK_LENGTH));
+    return ((num << NKBSHIFT_NUMBER) | (len & NKBMASK_LENGTH));
 }
 
 /**

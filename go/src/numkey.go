@@ -36,6 +36,9 @@ const NkbshiftNumber = 4
 // NkcshiftChar is value shift to encode characters to numbers (A=1, ..., Z=26)
 const NkcshiftChar = 64
 
+// NumMaxLen is the maximum number length for E.164 and key reversibility
+const NumMaxLen = 15
+
 // encodeChar encodes the input character to a numeric value.
 // NOTE: This is safe to be used only with A to Z characters.
 func encodeChar(c byte) uint64 {
@@ -58,17 +61,26 @@ func decodeCountry(nk uint64) string {
 }
 
 // encodeNumber encodes a number string (shortcode or E.164).
+// Numbers are left-truncated to fit 15 digits and the length is set to 16.
 func encodeNumber(number string) uint64 {
+	size := len(number)
+	if size > NumMaxLen {
+		number = number[(size - NumMaxLen):size] // last 15 digits
+		size = 0                                 // flag non-revesible encoding
+	}
 	num, err := strconv.ParseUint(number, 10, 64)
 	if err != nil {
 		return 0
 	}
-	return ((num << NkbshiftNumber) | ((uint64)(len(number)) & NkbmaskLength))
+	return ((num << NkbshiftNumber) | ((uint64)(size) & NkbmaskLength))
 }
 
 // func decodeNumber decodes a number into a string
 func decodeNumber(nk uint64) string {
 	size := int(nk & NkbmaskLength)
+	if size == 0 {
+		return "" // non-reversible number encoding
+	}
 	s := strconv.FormatUint(((nk & NkbmaskNumber) >> NkbshiftNumber), 10)
 	slen := len(s)
 	if slen < size {
@@ -80,8 +92,8 @@ func decodeNumber(nk uint64) string {
 // NumKey returns an encoded COUNTRY + NUMBER
 func NumKey(country, number string) uint64 {
 	size := len(number)
-	if len(country) != 2 || size < 1 || size > 15 {
-		return 0 // E.164 support max 15 digits
+	if len(country) != 2 || size < 1 {
+		return 0
 	}
 	return (encodeCountry(country) | encodeNumber(number))
 }

@@ -698,11 +698,20 @@ class TestFunctions(TestCase):
             h = numkey.numkey(country, number)
             self.assertEqual(h, nk)
 
+    def test_numkey_long(self):
+        h = numkey.numkey(b"XX", b"9876543210987654321")
+        self.assertEqual(h, 0xc61ee0c29f50cb10)
+
     def test_decode_numkey(self):
         for country, number, nk, _ in numkeyTestData:
             h = numkey.decode_numkey(nk)
             self.assertEqual(h[0], country)
             self.assertEqual(h[1], number)
+
+    def test_decode_numkey_long(self):
+        h = numkey.decode_numkey(0xc61ee0c29f50cb10)
+        self.assertEqual(h[0], b"XX")
+        self.assertEqual(h[1], b"")
 
     def test_compare_numkey_country(self):
         vkcmpTestData = [
