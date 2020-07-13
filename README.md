@@ -2,7 +2,7 @@
 
 *Numerical Encoding for Short Codes or E.164 LVN*
 
-[![Build Status](https://travis-ci.com/nexmoinc/numkey.svg?token=YHpDM41jM29w1XFFg2HR&branch=master)](https://travis-ci.com/nexmoinc/numkey?token=YHpDM41jM29w1XFFg2HR&branch=master)
+[![Build Status](https://travis-ci.com/nexmoinc/numkey.svg?token=YHpDM41jM29w1XFFg2HR&branch=main)](https://travis-ci.com/nexmoinc/numkey?token=YHpDM41jM29w1XFFg2HR&branch=main)
 
 * **category**    Library
 * **copyright**   2019-2020 Vonage

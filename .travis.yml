@@ -4,6 +4,15 @@ dist: xenial
 
 sudo: required
 
+branches:
+  except:
+    - release
+
+branches:
+  only:
+    - main
+    - develop
+
 addons:
   apt:
     packages:
