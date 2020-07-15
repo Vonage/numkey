@@ -45,9 +45,6 @@ GOTEST := GOPATH=$(GOPATH) gotest
 # Directory containing the source code
 SRCDIR=./src
 
-# List of packages
-GOPKGS := $(shell $(GO) list $(SRCDIR)/...)
-
 # Enable junit report when not in LOCAL mode
 ifeq ($(strip $(DEVMODE)),LOCAL)
 	TESTEXTRACMD=&& $(GO) tool cover -func=target/report/coverage.out
@@ -70,7 +67,6 @@ help:
 	@echo "    make coverage : Generate the coverage report"
 	@echo ""
 	@echo "    make format   : Format the source code"
-	@echo "    make generate : Generate go code automatically"
 	@echo "    make linter   : Check code against multiple linters"
 	@echo "    make docs     : Generate static documentation"
 	@echo ""
@@ -88,11 +84,6 @@ ensuretarget:
 	@mkdir -p target/report
 	@mkdir -p target/docs
 
-# Generate test mocks
-.PHONY: generate
-generate:
-	$(GO) generate $(GOPKGS)
-
 # Run the unit tests
 .PHONY: test
 test: ensuretarget
@@ -104,7 +95,7 @@ test: ensuretarget
 	-race \
 	-failfast \
 	-coverprofile=target/report/coverage.out \
-	-v $(GOPKGS) $(TESTEXTRACMD)
+	-v $(SRCDIR) $(TESTEXTRACMD)
 	@echo -e "\n\n>>> END: Unit Tests <<<\n\n"
 
 # Format the source code
@@ -125,7 +116,7 @@ linter:
 # Generate source docs
 .PHONY: docs
 docs: ensuretarget
-	GOPATH=$(GOPATH) godoc -url "http://localhost:6060/pkg/${CVSPATH}/${PROJECT}/go/src/" > target/docs/index.html
+	GOPATH=$(GOPATH) godoc -url "http://localhost:6060/pkg/${CVSPATH}/${PROJECT}/cgo/src/" > target/docs/index.html
 	sed -i 's|="/lib/godoc/|="|g' target/docs/index.html
 	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.js target/docs/
 	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.css target/docs/
