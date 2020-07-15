@@ -28,6 +28,12 @@ PKGNAME=${VENDOR}-${PROJECT}
 # Current directory
 CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
+# Target directory
+TARGETDIR=$(CURRENTDIR)target
+
+# Directory where to store binary utility tools
+BINUTIL=$(TARGETDIR)/binutil
+
 # GO lang path
 ifeq ($(GOPATH),)
 	# extract the GOPATH
@@ -39,17 +45,18 @@ export PATH := $(GOPATH)/bin:$(PATH)
 
 # Common commands
 GO := GOPATH=$(GOPATH) GOPRIVATE=$(CVSPATH) go
-GOFMT := gofmt
+GOFMT := GOPATH=$(GOPATH) gofmt
 GOTEST := GOPATH=$(GOPATH) gotest
+GODOC := GOPATH=$(GOPATH) godoc
 
 # Directory containing the source code
 SRCDIR=./src
 
 # Enable junit report when not in LOCAL mode
 ifeq ($(strip $(DEVMODE)),LOCAL)
-	TESTEXTRACMD=&& $(GO) tool cover -func=target/report/coverage.out
+	TESTEXTRACMD=&& $(GO) tool cover -func=$(TARGETDIR)/report/coverage.out
 else
-	TESTEXTRACMD=2>&1 | tee >(PATH=$(GOPATH)/bin:$(PATH) go-junit-report > target/test/report.xml); test $${PIPESTATUS[0]} -eq 0
+	TESTEXTRACMD=2>&1 | tee >(PATH=$(GOPATH)/bin:$(PATH) go-junit-report > $(TARGETDIR)/test/report.xml); test $${PIPESTATUS[0]} -eq 0
 endif
 
 # --- MAKE TARGETS ---
@@ -80,9 +87,10 @@ all: clean deps qa
 # Create the trget directories if missing
 .PHONY: ensuretarget
 ensuretarget:
-	@mkdir -p target/test
-	@mkdir -p target/report
-	@mkdir -p target/docs
+	@mkdir -p $(TARGETDIR)/test
+	@mkdir -p $(TARGETDIR)/report
+	@mkdir -p $(TARGETDIR)/binutil
+	@mkdir -p $(TARGETDIR)/docs
 
 # Run the unit tests
 .PHONY: test
@@ -94,7 +102,7 @@ test: ensuretarget
 	-bench=. \
 	-race \
 	-failfast \
-	-coverprofile=target/report/coverage.out \
+	-coverprofile=$(TARGETDIR)/report/coverage.out \
 	-v $(SRCDIR) $(TESTEXTRACMD)
 	@echo -e "\n\n>>> END: Unit Tests <<<\n\n"
 
@@ -105,22 +113,22 @@ format:
 
 # Generate the coverage report
 .PHONY: coverage
-coverage:
-	@mkdir -p target/report
-	$(GO) tool cover -html=target/report/coverage.out -o target/report/coverage.html
+coverage: ensuretarget
+	$(GO) tool cover -html=$(TARGETDIR)/report/coverage.out -o $(TARGETDIR)/report/coverage.html
 
+# Execute multiple linter tools
 .PHONY: linter
 linter:
-	./target/tools/golangci-lint run $(SRCDIR)/...
+	$(BINUTIL)/golangci-lint run $(SRCDIR)/...
 
 # Generate source docs
 .PHONY: docs
 docs: ensuretarget
-	GOPATH=$(GOPATH) godoc -url "http://localhost:6060/pkg/${CVSPATH}/${PROJECT}/go/src/" > target/docs/index.html
-	sed -i 's|="/lib/godoc/|="|g' target/docs/index.html
-	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.js target/docs/
-	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.css target/docs/
-	sed -i "s|\"/src/${CVSPATH}/${PROJECT}/|https://${CVSPATH}/${PROJECT}/blob/master/|g" target/docs/index.html
+	$(GODOC) -url "http://localhost:6060/pkg/${CVSPATH}/${PROJECT}/go/src/" > $(TARGETDIR)/docs/index.html
+	sed -i 's|="/lib/godoc/|="|g' $(TARGETDIR)/docs/index.html
+	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.js $(TARGETDIR)/docs/
+	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.css $(TARGETDIR)/docs/
+	sed -i "s|\"/src/${CVSPATH}/${PROJECT}/|https://${CVSPATH}/${PROJECT}/blob/master/|g" $(TARGETDIR)/docs/index.html
 
 # Run all tests and static analysis tools
 .PHONY: qa
@@ -129,7 +137,7 @@ qa: test coverage linter
 # Get the test dependencies
 .PHONY: deps
 deps: ensuretarget
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b ./target/tools v1.27.0
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) v1.27.0
 	(GO111MODULE=off $(GO) get github.com/jstemmer/go-junit-report)
 	(GO111MODULE=off $(GO) get github.com/rakyll/gotest)
 	(GO111MODULE=off $(GO) get github.com/golang/mock/mockgen)
@@ -137,11 +145,11 @@ deps: ensuretarget
 # Remove any build artifact
 .PHONY: clean
 clean:
-	rm -rf ./target
+	rm -rf $(TARGETDIR)
 	$(GO) clean -i ./...
 
 # build example
 .PHONY: example
 example:
-	$(GO) build -o ./target/example ./example \
-	&& ./target/example
+	$(GO) build -o $(TARGETDIR)/example $(CURRENTDIR)/example \
+	&& $(TARGETDIR)/example
