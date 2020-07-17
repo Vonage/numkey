@@ -5,10 +5,6 @@ dist: bionic
 sudo: required
 
 branches:
-  except:
-    - release
-
-branches:
   only:
     - main
     - develop
