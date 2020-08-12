@@ -44,10 +44,10 @@ endif
 export PATH := $(GOPATH)/bin:$(PATH)
 
 # Common commands
-GO := GOPATH=$(GOPATH) GOPRIVATE=$(CVSPATH) go
-GOFMT := GOPATH=$(GOPATH) gofmt
-GOTEST := GOPATH=$(GOPATH) gotest
-GODOC := GOPATH=$(GOPATH) godoc
+GO=GOPATH=$(GOPATH) GOPRIVATE=$(CVSPATH) go
+GOFMT=GOPATH=$(GOPATH) gofmt
+GOTEST=GOPATH=$(GOPATH) gotest
+GODOC=GOPATH=$(GOPATH) godoc
 
 # Directory containing the source code
 SRCDIR=./src
