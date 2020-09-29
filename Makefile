@@ -13,6 +13,12 @@ VENDOR=nexmoinc
 # Project name
 PROJECT=numkey
 
+# Current directory
+CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+
+# Target directory
+TARGETDIR=$(CURRENTDIR)target
+
 # --- MAKE TARGETS ---
 
 # Display general help about this command
@@ -78,11 +84,11 @@ clean:
 # Build everything inside a Docker container
 .PHONY: dbuild
 dbuild:
-	@mkdir -p target
-	@rm -rf target/*
-	@echo 0 > target/make.exit
-	CVSPATH=$(CVSPATH) VENDOR=$(VENDOR) PROJECT=$(PROJECT) MAKETARGET='$(MAKETARGET)' ./dockerbuild.sh
-	@exit `cat target/make.exit`
+	@mkdir -p $(TARGETDIR)
+	@rm -rf $(TARGETDIR)/*
+	@echo 0 > $(TARGETDIR)/make.exit
+	CVSPATH=$(CVSPATH) VENDOR=$(VENDOR) PROJECT=$(PROJECT) MAKETARGET='$(MAKETARGET)' $(CURRENTDIR)/dockerbuild.sh
+	@exit `cat $(TARGETDIR)/make.exit`
 
 # Publish Documentation in GitHub (requires writing permissions)
 .PHONY: pubdocs
