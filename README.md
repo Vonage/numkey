@@ -140,7 +140,7 @@ Example of NumKey encoding:
 ### Long non-standard numbers
 
 If a non-standard number is longer than the E.164 supported 15 digits, than the LENGHT is set to zero and the number is truncated to include only the last 15 digits.
-These keys are nor directly reversible and require a lookup-table.
+These keys are not directly reversible and require a lookup-table.
 
 
 <a name="properties"></a>
@@ -205,7 +205,6 @@ make test
 <a name="clib"></a>
 ## C Library
 
-* [C source code documentation](https://nexmoinc.github.io/numkey/c/index.html)
 * [C Usage Examples](c/test/test_example.c)
 
 The reference implementation of this library is written in header-only C programming language in a way that is also compatible with C++.
@@ -225,7 +224,6 @@ This tools requires the positional arguments `COUNTRY`, `NUMBER` and returns the
 <a name="cgolib"></a>
 ## Go Library C wrapper
 
-* [Go source code documentation](https://nexmoinc.github.io/numkey/cgo/index.html)
 * [Go Usage Examples](cgo/example/main.go)
 
 A go wrapper is located in the `cgo` directory.  
@@ -235,7 +233,6 @@ Use the "`make cgo`" command to test the GO wrapper and generate reports.
 <a name="golib"></a>
 ## Go Library (golang)
 
-* [Go source code documentation](https://nexmoinc.github.io/numkey/go/index.html)
 * [Go Usage Examples](go/example/main.go)
 
 A native Go implementation is located in the `go` directory.  
@@ -245,7 +242,6 @@ Use the "`make go`" command to test the GO version and generate reports.
 <a name="pythonlib"></a>
 ## Python Module
 
-* [Python source code documentation](https://nexmoinc.github.io/numkey/python/numkey.html)
 * [Python Usage Examples](python/test/example.py)
 
 The python module is located in the `python` directory.
@@ -253,11 +249,14 @@ Use the "`make python`" command to test the Python wrapper and generate reports.
 
 
 <a name="jslib"></a>
-## Javascript library (limited support)
+## Javascript library
 
+The javascript module is located in the `javascript` directory.
 Use the "`make javascript`" command to test and minify the Javascript implementation.
 
 
 <a name="java"></a>
-## Java library (limited support)
+## Java library
 
+The java module is located in the `java` directory.
+Use the "`make java`" command to build and test the Java implementation.
