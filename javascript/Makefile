@@ -14,18 +14,13 @@ help:
 	@echo "Requires: node-js and uglify-js."
 	@echo "The following commands are available:"
 	@echo ""
-	@echo "    make test    : Run the unit tests against source code"
 	@echo "    make build   : Build and test a minified version of the library"
-	@echo "    make format  : Format the source code"
 	@echo "    make clean   : Remove any build artifact"
+	@echo "    make format  : Format the source code"
+	@echo "    make test    : Run the unit tests against source code"
 	@echo ""
 
 all: clean format test build
-
-# Run the unit tests
-.PHONY: test
-test:
-	cd test && node test_numkey.js '../src/numkey.js'
 
 # Build a minified version of the library
 .PHONY: build
@@ -34,13 +29,18 @@ build:
 	uglifyjs --compress --keep-fnames --comments --output target/build/numkey.js src/numkey.js 
 	cd test && node test_numkey.js '../target/build/numkey.js'
 
+# Remove any build artifact
+.PHONY: clean
+clean:
+	rm -rf target
+
 # Format the source code
 .PHONY: format
 format:
 	js-beautify --replace src/numkey.js
 	js-beautify --replace test/test_numkey.js
 
-# Remove any build artifact
-.PHONY: clean
-clean:
-	rm -rf target
+# Run the unit tests
+.PHONY: test
+test:
+	cd test && node test_numkey.js '../src/numkey.js'

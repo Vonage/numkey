@@ -69,20 +69,45 @@ help:
 	@echo "GOPATH=$(GOPATH)"
 	@echo "The following commands are available:"
 	@echo ""
-	@echo "    make qa       : Run all tests and static analysis tools"
-	@echo "    make test     : Run unit tests"
+	@echo "    make clean    : Remove any build artifact"
 	@echo "    make coverage : Generate the coverage report"
-	@echo ""
+	@echo "    make deps     : Get dependencies"
+	@echo "    make docs     : Generate static documentation"
 	@echo "    make format   : Format the source code"
 	@echo "    make linter   : Check code against multiple linters"
-	@echo "    make docs     : Generate static documentation"
-	@echo ""
-	@echo "    make deps     : Get dependencies"
-	@echo "    make clean    : Remove any build artifact"
+	@echo "    make qa       : Run all tests and static analysis tools"
+	@echo "    make test     : Run unit tests"
 	@echo ""
 
 # Alias for help target
 all: clean deps qa
+
+# Remove any build artifact
+.PHONY: clean
+clean:
+	rm -rf $(TARGETDIR)
+
+# Generate the coverage report
+.PHONY: coverage
+coverage: ensuretarget
+	$(GO) tool cover -html=$(TARGETDIR)/report/coverage.out -o $(TARGETDIR)/report/coverage.html
+
+# Get the test dependencies
+.PHONY: deps
+deps: ensuretarget
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) v1.33.0
+	(GO111MODULE=off $(GO) get -u github.com/jstemmer/go-junit-report)
+	(GO111MODULE=off $(GO) get -u github.com/rakyll/gotest)
+	(GO111MODULE=off $(GO) get -u github.com/golang/mock/mockgen)
+
+# Generate source docs
+.PHONY: docs
+docs: ensuretarget
+	$(GODOC) -url "http://localhost:6060/pkg/${CVSPATH}/${PROJECT}/cgo/src/" > $(TARGETDIR)/docs/index.html
+	sed -i 's|="/lib/godoc/|="|g' $(TARGETDIR)/docs/index.html
+	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.js $(TARGETDIR)/docs/
+	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.css $(TARGETDIR)/docs/
+	sed -i "s|\"/src/${CVSPATH}/${PROJECT}/|https://${CVSPATH}/${PROJECT}/blob/master/|g" $(TARGETDIR)/docs/index.html
 
 # Create the trget directories if missing
 .PHONY: ensuretarget
@@ -91,6 +116,26 @@ ensuretarget:
 	@mkdir -p $(TARGETDIR)/report
 	@mkdir -p $(TARGETDIR)/binutil
 	@mkdir -p $(TARGETDIR)/docs
+
+# build example
+.PHONY: example
+example:
+	$(GO) build -o $(TARGETDIR)/example $(CURRENTDIR)/example \
+	&& $(TARGETDIR)/example
+
+# Format the source code
+.PHONY: format
+format:
+	@find ${SRCDIR} -type f -name "*.go" -exec $(GOFMT) -s -w {} \;
+
+# Execute multiple linter tools
+.PHONY: linter
+linter:
+	$(BINUTIL)/golangci-lint run $(SRCDIR)/...
+
+# Run all tests and static analysis tools
+.PHONY: qa
+qa: test coverage linter
 
 # Run the unit tests
 .PHONY: test
@@ -105,51 +150,3 @@ test: ensuretarget
 	-coverprofile=target/report/coverage.out \
 	-v $(SRCDIR) $(TESTEXTRACMD)
 	@echo -e "\n\n>>> END: Unit Tests <<<\n\n"
-
-# Format the source code
-.PHONY: format
-format:
-	@find ${SRCDIR} -type f -name "*.go" -exec $(GOFMT) -s -w {} \;
-
-# Generate the coverage report
-.PHONY: coverage
-coverage: ensuretarget
-	$(GO) tool cover -html=$(TARGETDIR)/report/coverage.out -o $(TARGETDIR)/report/coverage.html
-
-# Execute multiple linter tools
-.PHONY: linter
-linter:
-	$(BINUTIL)/golangci-lint run $(SRCDIR)/...
-
-# Generate source docs
-.PHONY: docs
-docs: ensuretarget
-	$(GODOC) -url "http://localhost:6060/pkg/${CVSPATH}/${PROJECT}/cgo/src/" > $(TARGETDIR)/docs/index.html
-	sed -i 's|="/lib/godoc/|="|g' $(TARGETDIR)/docs/index.html
-	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.js $(TARGETDIR)/docs/
-	cp $(GOPATH)/src/golang.org/x/tools/godoc/static/*.css $(TARGETDIR)/docs/
-	sed -i "s|\"/src/${CVSPATH}/${PROJECT}/|https://${CVSPATH}/${PROJECT}/blob/master/|g" $(TARGETDIR)/docs/index.html
-
-# Run all tests and static analysis tools
-.PHONY: qa
-qa: test coverage linter
-
-# Get the test dependencies
-.PHONY: deps
-deps: ensuretarget
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) v1.32.0
-	(GO111MODULE=off $(GO) get github.com/jstemmer/go-junit-report)
-	(GO111MODULE=off $(GO) get github.com/rakyll/gotest)
-	(GO111MODULE=off $(GO) get github.com/golang/mock/mockgen)
-
-# Remove any build artifact
-.PHONY: clean
-clean:
-	rm -rf $(TARGETDIR)
-	$(GO) clean -i ./...
-
-# build example
-.PHONY: example
-example:
-	$(GO) build -o $(TARGETDIR)/example $(CURRENTDIR)/example \
-	&& $(TARGETDIR)/example
