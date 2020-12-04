@@ -14,8 +14,8 @@ help:
 	@echo "The following commands are available:"
 	@echo ""
 	@echo "    make build   : Build the library"
-	@echo "    make test    : Run the unit tests against source code"
 	@echo "    make clean   : Remove any build artifact"
+	@echo "    make test    : Run the unit tests against source code"
 	@echo ""
 
 all: clean build test
@@ -25,12 +25,12 @@ all: clean build test
 build:
 	./gradlew jar
 
-# Run the unit tests
-.PHONY: test
-test:
-	./gradlew test
-
 # Remove any build artifact
 .PHONY: clean
 clean:
 	./gradlew clean
+
+# Run the unit tests
+.PHONY: test
+test:
+	./gradlew test
