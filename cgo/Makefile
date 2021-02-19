@@ -75,12 +75,17 @@ help:
 	@echo "    make docs     : Generate static documentation"
 	@echo "    make format   : Format the source code"
 	@echo "    make linter   : Check code against multiple linters"
+	@echo "    make mod      : Download dependencies"
 	@echo "    make qa       : Run all tests and static analysis tools"
 	@echo "    make test     : Run unit tests"
 	@echo ""
+	@echo "Use DEVMODE=LOCAL for human friendly output."
+	@echo "To test and build everything from scratch:"
+	@echo "DEVMODE=LOCAL make format clean mod deps qa"
+	@echo ""
 
 # Alias for help target
-all: clean deps qa
+all: clean mod deps qa
 
 # Remove any build artifact
 .PHONY: clean
@@ -95,12 +100,9 @@ coverage: ensuretarget
 # Get the test dependencies
 .PHONY: deps
 deps: ensuretarget
-	$(GO) get -u ./...
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) v1.37.0
-	(GO111MODULE=off $(GO) get -u github.com/jstemmer/go-junit-report)
-	(GO111MODULE=off $(GO) get -u github.com/rakyll/gotest)
-	(GO111MODULE=off $(GO) get -u github.com/golang/mock/mockgen)
-	($(GO) get -u github.com/golang/mock/gomock@v1.4.4)
+	$(GO) install github.com/rakyll/gotest
+	$(GO) install github.com/jstemmer/go-junit-report
 
 # Generate source docs
 .PHONY: docs
@@ -134,6 +136,10 @@ format:
 .PHONY: linter
 linter:
 	$(BINUTIL)/golangci-lint run $(SRCDIR)/...
+
+.PHONY: mod
+mod:
+	$(GO) mod download
 
 # Run all tests and static analysis tools
 .PHONY: qa
