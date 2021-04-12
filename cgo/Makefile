@@ -100,7 +100,7 @@ coverage: ensuretarget
 # Get the test dependencies
 .PHONY: deps
 deps: ensuretarget
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) v1.38.0
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) v1.39.0
 	$(GO) install github.com/rakyll/gotest
 	$(GO) install github.com/jstemmer/go-junit-report
 
