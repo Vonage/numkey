@@ -2,6 +2,9 @@
 
 *Numerical Encoding for Short Codes or E.164 LVN*
 
+[![check](https://github.com/nexmoinc/numkey/actions/workflows/check.yaml/badge.svg)](https://github.com/nexmoinc/numkey/actions/workflows/check.yaml)
+[![whitesource](https://github.com/nexmoinc/numkey/actions/workflows/whitesource.yaml/badge.svg)](https://github.com/nexmoinc/numkey/actions/workflows/whitesource.yaml)
+
 * **category**    Library
 * **copyright**   2019-2020 Vonage
 * **license**     see [LICENSE](LICENSE)
