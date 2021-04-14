@@ -1,0 +1,97 @@
+name: check
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
+
+env:
+  GO_VERSION: 1.16.x
+  NODE_VERSION: 14
+  PYTHON_VERSION: 3.x
+  JAVA_VERSION: 11
+
+jobs:
+  c:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2-
+      - name: set RELEASE number
+        run: echo ${GITHUB_RUN_NUMBER} > RELEASE
+      - name: test
+        run: cd c && make version test build
+
+  cgo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: setup go build environment
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: set RELEASE number
+        run: echo ${GITHUB_RUN_NUMBER} > RELEASE
+      - name: test
+        run: cd cgo && make mod deps linter tests GOPATH=$(go env GOPATH)
+
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: setup go build environment
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: set RELEASE number
+        run: echo ${GITHUB_RUN_NUMBER} > RELEASE
+      - name: test
+        run: cd go && make mod deps linter tests GOPATH=$(go env GOPATH)
+
+  javascript:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: setup node build environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: set RELEASE number
+        run: echo ${GITHUB_RUN_NUMBER} > RELEASE
+      - name: test
+        run: cd javascript && make test build
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: setup python build environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: set RELEASE number
+        run: echo ${GITHUB_RUN_NUMBER} > RELEASE
+      - name: test
+        run: cd python && make vbuild
+
+  java:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: setup java build environment
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: ${{ env.JAVA_VERSION }}
+      - name: set RELEASE number
+        run: echo ${GITHUB_RUN_NUMBER} > RELEASE
+      - name: test
+        run: cd java && make build test
