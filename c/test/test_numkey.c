@@ -755,7 +755,6 @@ int test_numkey()
 int test_numkey_long()
 {
     int errors = 0;
-    int i;
     uint64_t nk;
     nk = numkey("XX", "9876543210987654321", 19);
     if (nk != 0xc61ee0c29f50cb10)
@@ -805,7 +804,6 @@ int test_decode_numkey()
 int test_decode_numkey_long()
 {
     int errors = 0;
-    int i;
     numkey_t h = {0};
     decode_numkey(0xc61ee0c29f50cb10, &h);
     if (strcmp(h.country, "XX") != 0)

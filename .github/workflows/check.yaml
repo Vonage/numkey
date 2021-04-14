@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: checkout repository
         uses: actions/checkout@v2
+      - name: install dependencies
+        run: sudo apt install -y lcov astyle
       - name: set RELEASE number
         run: echo ${GITHUB_RUN_NUMBER} > RELEASE
       - name: test
