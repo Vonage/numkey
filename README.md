@@ -11,7 +11,7 @@
 
 * **category**    Library
 * **copyright**   2019-2020 Vonage
-* **license**     see [LICENSE](LICENSE)
+* **license**     [MIT](https://github.com/nexmoinc/numkey/blob/main/LICENSE)
 * **link**        https://github.com/nexmoinc/numkey
 
 
