@@ -210,7 +210,7 @@ make test
 <a name="clib"></a>
 ## C Library
 
-* [C Usage Examples](c/test/test_example.c)
+* [C Usage Examples](https://github.com/nexmoinc/numkey/blob/main/c/test/test_example.c)
 
 The reference implementation of this library is written in header-only C programming language in a way that is also compatible with C++.
 
@@ -229,7 +229,7 @@ This tools requires the positional arguments `COUNTRY`, `NUMBER` and returns the
 <a name="cgolib"></a>
 ## Go Library C wrapper
 
-* [Go Usage Examples](cgo/example/main.go)
+* [Go Usage Examples](https://github.com/nexmoinc/numkey/blob/main/cgo/example/main.go)
 
 A go wrapper is located in the `cgo` directory.  
 Use the "`make cgo`" command to test the GO wrapper and generate reports.
@@ -238,7 +238,7 @@ Use the "`make cgo`" command to test the GO wrapper and generate reports.
 <a name="golib"></a>
 ## Go Library (golang)
 
-* [Go Usage Examples](go/example/main.go)
+* [Go Usage Examples](https://github.com/nexmoinc/numkey/blob/main/go/example/main.go)
 
 A native Go implementation is located in the `go` directory.  
 Use the "`make go`" command to test the GO version and generate reports.
@@ -247,7 +247,7 @@ Use the "`make go`" command to test the GO version and generate reports.
 <a name="pythonlib"></a>
 ## Python Module
 
-* [Python Usage Examples](python/test/example.py)
+* [Python Usage Examples](https://github.com/nexmoinc/numkey/blob/main/python/test/example.py)
 
 The python module is located in the `python` directory.
 Use the "`make python`" command to test the Python wrapper and generate reports.
