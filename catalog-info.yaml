@@ -1,0 +1,13 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: numkey
+  description: Numerical Encoding for Short Codes or E.164 LVN
+  annotations:
+    github.com/project-slug: nexmoinc/numkey
+    backstage.io/techdocs-ref: url:https://github.com/nexmoinc/numkey/tree/main
+spec:
+  type: library
+  owner: api.eng.oss@vonage.com
+  lifecycle: production
