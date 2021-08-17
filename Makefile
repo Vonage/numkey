@@ -13,6 +13,12 @@ VENDOR=nexmoinc
 # Project name
 PROJECT=numkey
 
+# Project version
+VERSION=$(shell cat VERSION)
+
+# Project release number (packaging build number)
+RELEASE=$(shell cat RELEASE)
+
 # Current directory
 CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
