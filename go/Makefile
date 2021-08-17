@@ -100,7 +100,7 @@ coverage: ensuretarget
 # Get the test dependencies
 .PHONY: deps
 deps: ensuretarget
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) v1.41.1
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) v1.42.0
 	$(GO) install github.com/rakyll/gotest
 	$(GO) install github.com/jstemmer/go-junit-report
 
@@ -139,7 +139,7 @@ linter:
 
 .PHONY: mod
 mod:
-	$(GO) mod download
+	$(GO) mod download all
 
 # Run all tests and static analysis tools
 .PHONY: qa
