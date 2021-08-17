@@ -28,14 +28,15 @@ help:
 	@echo "NumKey Makefile."
 	@echo "The following commands are available:"
 	@echo ""
-	@echo "    make c            : Build and test the C version"
-	@echo "    make cgo          : Build and test the GO C-wrapper version"
-	@echo "    make go           : Build and test the GO version"
-	@echo "    make javascript   : Build and test the Javascript version"
-	@echo "    make python       : Build and test the Python version"
-	@echo "    make java         : Build and test the Java version"
-	@echo "    make clean        : Remove any build artifact"
-	@echo "    make dbuild       : Build everything inside a Docker container"
+	@echo "    make c          : Build and test the C version"
+	@echo "    make cgo        : Build and test the GO C-wrapper version"
+	@echo "    make go         : Build and test the GO version"
+	@echo "    make javascript : Build and test the Javascript version"
+	@echo "    make python     : Build and test the Python version"
+	@echo "    make java       : Build and test the Java version"
+	@echo "    make clean      : Remove any build artifact"
+	@echo "    make dbuild     : Build everything inside a Docker container"
+	@echo "    make tag        : Tag the Git repository"
 	@echo ""
 
 all: clean c cgo go javascript python
@@ -112,3 +113,9 @@ pubdocs:
 	git add . -A && \
 	git commit -m 'Update documentation' && \
 	git push origin gh-pages --force
+
+# Tag the Git repository
+.PHONY: tag
+tag:
+	git tag -a "v$(VERSION)" -m "Version $(VERSION)" && \
+	git push origin --tags
