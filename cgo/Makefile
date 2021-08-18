@@ -150,6 +150,7 @@ qa: test coverage linter
 test: ensuretarget
 	@echo -e "\n\n>>> START: Unit Tests <<<\n\n"
 	$(GOTEST) \
+	-shuffle=on \
 	-tags=unit \
 	-covermode=atomic \
 	-bench=. \
