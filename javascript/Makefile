@@ -4,7 +4,8 @@
 # @link        https://github.com/nexmoinc/numkey
 # ------------------------------------------------------------------------------
 
-# --- MAKE TARGETS ---
+SHELL=/bin/bash
+.SHELLFLAGS=-o pipefail -c
 
 # Display general help about this command
 .PHONY: help

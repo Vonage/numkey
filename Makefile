@@ -4,6 +4,9 @@
 # @link        https://github.com/nexmoinc/numkey
 # ------------------------------------------------------------------------------
 
+SHELL=/bin/bash
+.SHELLFLAGS=-o pipefail -c
+
 # CVS path (path to the parent dir containing the project)
 CVSPATH=github.com/nexmoinc
 

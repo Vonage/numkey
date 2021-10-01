@@ -4,8 +4,8 @@
 # @link        https://github.com/nexmoinc/numkey
 # ------------------------------------------------------------------------------
 
-# Use bash as shell (Note: Ubuntu now uses dash which doesn't support PIPESTATUS).
 SHELL=/bin/bash
+.SHELLFLAGS=-o pipefail -c
 
 # Project name
 PROJECT=numkey
