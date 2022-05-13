@@ -130,7 +130,7 @@ example:
 # Format the source code
 .PHONY: format
 format:
-	@find ${SRCDIR} -type f -name "*.go" -exec $(GOFMT) -s -w {} \;
+	@find $(SRCDIR) -type f -name "*.go" -exec bash -c "$(GOFMT) -s -w {}" \;
 
 # Execute multiple linter tools
 .PHONY: linter

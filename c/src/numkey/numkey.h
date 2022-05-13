@@ -4,7 +4,7 @@
 //
 // @category   Libraries
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2019-2020 Vonage
+// @copyright  2019-2022 Vonage
 // @license    see LICENSE file
 // @link       https://github.com/nexmoinc/numkey
 
@@ -24,21 +24,21 @@
 #include <stddef.h>
 #include "hex.h"
 
-#define NKBMASK_COUNTRY_FL 0xF800000000000000  //!< Bit mask for the ISO 3166 alpha-2 country code first letter  [ 11111000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 ]
-#define NKBMASK_COUNTRY_SL 0x07C0000000000000  //!< Bit mask for the ISO 3166 alpha-2 country code second letter [ 00000111 11000000 00000000 00000000 00000000 00000000 00000000 00000000 ]
-#define NKBMASK_NUMBER     0x003FFFFFFFFFFFF0  //!< Bit mask for the short code or E.164 number (max 15 digits)  [ 00000000 00111111 11111111 11111111 11111111 11111111 11111111 11110000 ]
-#define NKBMASK_LENGTH     0x000000000000000F  //!< Bit mask for the number length                               [ 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00001111 ]
+#define NKBMASK_COUNTRY_FL 0xF800000000000000  //!< Bit mask for the ISO 3166 alpha-2 country code first letter  [ 11111000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 ].
+#define NKBMASK_COUNTRY_SL 0x07C0000000000000  //!< Bit mask for the ISO 3166 alpha-2 country code second letter [ 00000111 11000000 00000000 00000000 00000000 00000000 00000000 00000000 ].
+#define NKBMASK_NUMBER     0x003FFFFFFFFFFFF0  //!< Bit mask for the short code or E.164 number (max 15 digits)  [ 00000000 00111111 11111111 11111111 11111111 11111111 11111111 11110000 ].
+#define NKBMASK_LENGTH     0x000000000000000F  //!< Bit mask for the number length                               [ 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00001111 ].
 
-#define NKBSHIFT_COUNTRY_FL 59 //!< COUNTRY first letter LSB position from the NumKey LSB
-#define NKBSHIFT_COUNTRY_SL 54 //!< COUNTRY second letter LSB position from the NumKey LSB
-#define NKBSHIFT_NUMBER      4 //!< NUMBER LSB position from the NumKey LSB
+#define NKBSHIFT_COUNTRY_FL 59 //!< COUNTRY first letter LSB position from the NumKey LSB.
+#define NKBSHIFT_COUNTRY_SL 54 //!< COUNTRY second letter LSB position from the NumKey LSB.
+#define NKBSHIFT_NUMBER      4 //!< NUMBER LSB position from the NumKey LSB.
 
-#define NKSLENGTH_COUNTRY    3 //!< Number of characters in the country code + NULL terminator
-#define NKSLENGTH_NUMBER    16 //!< Number of characters in the number code + NULL terminator
+#define NKSLENGTH_COUNTRY    3 //!< Number of characters in the country code + NULL terminator.
+#define NKSLENGTH_NUMBER    16 //!< Number of characters in the number code + NULL terminator.
 
-#define NKCSHIFT_CHAR       64 //!< Value shift to encode characters to numbers (A=1, ..., Z=26)
+#define NKCSHIFT_CHAR       64 //!< Value shift to encode characters to numbers (A=1, ..., Z=26).
 
-#define NKNUMMAXLEN         15 //!< Maximum number length for E.164 and key reversibility
+#define NKNUMMAXLEN         15 //!< Maximum number length for E.164 and key reversibility.
 
 /**
  * NumKey struct.
@@ -46,17 +46,17 @@
  */
 typedef struct numkey_t
 {
-    char country[NKSLENGTH_COUNTRY]; //!< ISO 3166 alpha-2 country code
-    char number[NKSLENGTH_NUMBER];   //!< Short code or E.164 number (max 15 digits)
+    char country[NKSLENGTH_COUNTRY]; //!< ISO 3166 alpha-2 country code.
+    char number[NKSLENGTH_NUMBER];   //!< Short code or E.164 number (max 15 digits).
 } numkey_t;
 
 /**
  * Encodes the input character to a numeric value.
  * NOTE: This is safe to be used only with A to Z characters.
  *
- * @param c Character to encode
+ * @param c Character to encode.
  *
- * @return Encoded character
+ * @return Encoded character.
  */
 static inline uint64_t encode_char(int c)
 {
@@ -66,9 +66,9 @@ static inline uint64_t encode_char(int c)
 /**
  * Encode country code.
  *
- * @param country ISO 3166 alpha-2 country code
+ * @param country ISO 3166 alpha-2 country code.
  *
- * @return Encoded country code
+ * @return Encoded country code.
  */
 static inline uint64_t encode_country(const char *country)
 {
@@ -78,7 +78,7 @@ static inline uint64_t encode_country(const char *country)
 /**
  * Decode country code into 2-byte string.
  *
- * @param nk       NumKey
+ * @param nk       NumKey.
  * @param country  Pre-allocated string buffer to be returned (it must be at least two bytes).
  */
 static inline void decode_country(uint64_t nk, char *country)
@@ -91,7 +91,7 @@ static inline void decode_country(uint64_t nk, char *country)
 /**
  * Encode number string.
  *
- * @param number String containing the Short code or E.164 LVN number
+ * @param number String containing the Short code or E.164 LVN number.
  * @param size   Length of the number (number of digits).
  *
  * @return Encoded number
@@ -116,9 +116,9 @@ static inline uint64_t encode_number(const char *number, size_t size)
 }
 
 /**
- * Decode number into string
+ * Decode number into string.
  *
- * @param nk       NumKey
+ * @param nk       NumKey.
  * @param number   Number string buffer to be returned.
  *
  * @return      Number length (number of digits).
@@ -142,9 +142,9 @@ static inline size_t decode_number(uint64_t nk, char *number)
 /**
  * Encode numkey.
  *
- * @param country ISO 3166 alpha-2 country code
- * @param number String containing the Short code or LVN number
- * @param numsize   Length of the number (number of digits).
+ * @param country ISO 3166 alpha-2 country code.
+ * @param number  String containing the Short code or LVN number.
+ * @param numsize Length of the number (number of digits).
  *
  * @return NumKey 64 bit code.
  */
@@ -154,7 +154,7 @@ static inline uint64_t numkey(const char *country, const char *number, size_t nu
 }
 
 /**
- * Decode a NumKey code to get the individual components
+ * Decode a NumKey code to get the individual components.
  *
  * @param nk    NumKey code.
  * @param data  Decoded numkey structure.

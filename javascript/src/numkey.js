@@ -17,6 +17,8 @@ var NKBMASK_COUNTRY_SL = 0x07C00000 //!< Bit mask for the ISO 3166 alpha-2 count
 var NKBMASK_NUMBER_HI = 0x003FFFFF //!< Bit mask for the hi part of short code or E.164 number (max 15 digits)  [ 00000000 00111111 11111111 11111111 ]
 var NKBMASK_NUMBER_LO = 0xFFFFFFF0 //!< Bit mask for the lo part of short code or E.164 number (max 15 digits)  [ 11111111 11111111 11111111 11110000 ]
 
+var NKBMASK_32 = 0xFFFFFFFF //!< 32-Bit mask [ 11111111 11111111 11111111 11111111 ]
+
 var NKBMASK_LENGTH = 0x0000000F //!< Bit mask for the number length [ 00000000 00000000 00000000 00001111 ]
 
 var NKBSHIFT_COUNTRY_FL = 27 //!< COUNTRY first letter LSB position from the NumKey LSB
@@ -36,6 +38,8 @@ var NKNUMMUL = 0x100000000 //!< = [2^32] multiplier to set the number HI bits
 var NKZEROSHIFT = 48 //!< ASCII code of the '0' character
 
 var NKNUMMAXLEN = 15 //!< Maximum number length for E.164 and key reversibility
+
+var PKNUMMAXLEN = 15 //!< Maximum number of digits to store for the prefixkey.
 
 function encodeChar(c) {
     return ((c - NKCSHIFT_CHAR) >>> 0)
@@ -132,6 +136,33 @@ function parseHex(ns) {
     };
 }
 
+function prefixKey(number) {
+    var size = number.length;
+    if (size < 1) {
+        return {
+            "hi": 0,
+            "lo": 0
+        };
+    }
+    var num = 0;
+    var b;
+    var i = 0;
+    if (size > PKNUMMAXLEN) {
+        size = PKNUMMAXLEN; // truncate number
+    }
+    for (i = 0; i < size; i++) {
+        b = (number.charCodeAt(i) - NKZEROSHIFT);
+        num = (num * 10) + b;
+    }
+    for (i = size; i < PKNUMMAXLEN; i++) {
+        num = (num * 10); // zero right-padding
+    }
+    return {
+        "hi": ((((num / NKNUMMUL) >>> 0) & NKBMASK_32) >>> 0),
+        "lo": ((num & NKBMASK_32) >>> 0)
+    };
+}
+
 if (typeof(module) !== 'undefined') {
     module.exports = {
         numKey: numKey,
@@ -139,5 +170,6 @@ if (typeof(module) !== 'undefined') {
         compareNumKeyCountry: compareNumKeyCountry,
         numKeyString: numKeyString,
         parseHex: parseHex,
+        prefixKey: prefixKey,
     }
 }

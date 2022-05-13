@@ -17,6 +17,7 @@ static PyObject *py_decode_numkey(PyObject *self, PyObject *args, PyObject *keyw
 static PyObject *py_compare_numkey_country(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *py_numkey_hex(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *py_parse_numkey_hex(PyObject *self, PyObject *args, PyObject *keywds);
+static PyObject *py_prefixkey(PyObject *self, PyObject *args, PyObject *keywds);
 
 PyMODINIT_FUNC initnumkey(void);
 
@@ -112,6 +113,24 @@ PyMODINIT_FUNC initnumkey(void);
 ">>> parse_numkey_hex(b'c2ab5e44f21a947f')\n"                          \
 "14027409114588157055"
 
+
+#define PYPREFIXKEY_DOCSTRING "Encode a number string into uint64.\n"  \
+"The encoded number is always 15 digits long as it is either right-padded with zeros or truncated.\n"\
+"\n"\
+"Parameters\n"\
+"----------\n"                                                         \
+"number : str or bytes\n"                                              \
+"    Number. String containing the E.164 number or prefix (max 15 digits or it will be truncated).\n"\
+"\n"\
+"Returns\n"\
+"-------\n"\
+"int:\n"\
+"    PrefixKey 64 bit code.\n"                                         \
+"\n"\
+"Example\n"\
+"-------\n"\
+">>> prefixkey(number=b'123456789012345')\n"                           \
+"123456789012345"
 
 #if defined(__SUNPRO_C) || defined(__hpux) || defined(_AIX)
 #define inline

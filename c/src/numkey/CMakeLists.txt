@@ -8,7 +8,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 link_directories( ${CMAKE_CURRENT_BINARY_DIR} )
 include_directories (${CMAKE_CURRENT_BINARY_DIR} ${PROJECT_BINARY_DIR}/src/numkey )
 
-add_library (numkey binsearch.h hex.h set.h numkey.h)
+add_library (numkey binsearch.h hex.h set.h numkey.h prefixkey.h)
 target_include_directories (numkey PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 set_target_properties(numkey PROPERTIES LINKER_LANGUAGE "C")
 
