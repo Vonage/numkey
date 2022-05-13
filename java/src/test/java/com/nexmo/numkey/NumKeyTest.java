@@ -89,6 +89,13 @@ public class NumKeyTest {
         assertEquals(nk, h);
     }
 
+    @Test
+    @Parameters(method = "testPrefixKey_Parameters")
+    public void prefixkeyString(String number, long pk) throws Throwable {
+        long h = NumKey.prefixkey(number);
+        assertEquals(pk, h);
+    }
+
     @SuppressWarnings("unused")
     private static Object[][] testCompareNumkeyCountry_Parameters() throws Throwable {
         // Parameters: nka={0}, nkb={1}, exp={2}
@@ -780,6 +787,26 @@ public class NumKeyTest {
                 {"ZY", "749305607578733", -2996415661362231585L, "d66a97d4e91646df"},
                 {"ZZ", "601469829912013", -2980766635295417121L, "d6a23089b8e15cdf"}
         };
+    }
 
+    @SuppressWarnings("unused")
+    private static Object[][] testPrefixKey_Parameters() throws Throwable {
+        // Parameters: number={o}, pk={2}
+        return new Object[][]{
+                {"", 0},
+                {"0", 0},
+                {"00", 0},
+                {"00000000000000", 0},
+                {"000000000000000", 0},
+                {"0000000000000000", 0},
+                {"000000000000001", 1},
+                {"0000000000000019", 1},
+                {"1", 100000000000000L},
+                {"10", 100000000000000L},
+                {"10000000000000", 100000000000000L},
+                {"100000000000000", 100000000000000L},
+                {"1000000000000000", 100000000000000L},
+                {"999999999999999", 999999999999999L},
+        };
     }
 }

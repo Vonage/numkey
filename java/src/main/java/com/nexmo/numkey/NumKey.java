@@ -6,14 +6,15 @@ package com.nexmo.numkey;
 
 public class NumKey {
 
-    private final static long NKBMASK_NUMBER = Long.parseUnsignedLong("003FFFFFFFFFFFF0", 16);  //!< Bit mask for the short code or E.164 number (max 15 digits)  [ 00000000 00111111 11111111 11111111 11111111 11111111 11111111 11110000 ]
-    private final static long NKBMASK_LENGTH = 0x0F; //!< Bit mask for the number length [ 00001111 ]
-    private final static byte NKBMASK_COUNTRY = 0x1F; //!< Bit mask for country five bit [ 00011111 ]
-    private final static byte NKBSHIFT_COUNTRY_FL = 59; //!< COUNTRY first letter LSB position from the NumKey LSB
-    private final static byte NKBSHIFT_COUNTRY_SL = 54; //!< COUNTRY second letter LSB position from the NumKey LSB
-    private final static byte NKBSHIFT_NUMBER = 4; //!< NUMBER LSB position from the NumKey LSB
-    private final static byte NKCSHIFT_CHAR = 64; //!< Value shift to encode characters to numbers (A=1, ..., Z=26)
-    private final static byte NKNUMMAXLEN = 15; //!< Maximum number length for E.164 and key reversibility
+    private final static long NKBMASK_NUMBER = Long.parseUnsignedLong("003FFFFFFFFFFFF0", 16);  //!< Bit mask for the short code or E.164 number (max 15 digits)  [ 00000000 00111111 11111111 11111111 11111111 11111111 11111111 11110000 ].
+    private final static long NKBMASK_LENGTH = 0x0F; //!< Bit mask for the number length [ 00001111 ].
+    private final static byte NKBMASK_COUNTRY = 0x1F; //!< Bit mask for country five bit [ 00011111 ].
+    private final static byte NKBSHIFT_COUNTRY_FL = 59; //!< COUNTRY first letter LSB position from the NumKey LSB.
+    private final static byte NKBSHIFT_COUNTRY_SL = 54; //!< COUNTRY second letter LSB position from the NumKey LSB.
+    private final static byte NKBSHIFT_NUMBER = 4; //!< NUMBER LSB position from the NumKey LSB.
+    private final static byte NKCSHIFT_CHAR = 64; //!< Value shift to encode characters to numbers (A=1, ..., Z=26).
+    private final static byte NKNUMMAXLEN = 15; //!< Maximum number length for E.164 and key reversibility.
+    private final static byte PKNUMMAXLEN = 15; //!< Maximum number of digits to store for the prefixkey.
 
     public static class NumData {
         public byte[] country;
@@ -29,8 +30,8 @@ public class NumKey {
      * Encodes the input byte character to a numeric value.
      * NOTE: This is safe to be used only with A-Z characters.
      *
-     * @param chr Character to encode
-     * @return Encoded character
+     * @param chr Character to encode.
+     * @return Encoded character.
      */
     private static long encodeChar(byte chr) {
         return ((long) chr - NKCSHIFT_CHAR);
@@ -39,8 +40,8 @@ public class NumKey {
     /**
      * Encode country code.
      *
-     * @param country ISO 3166 alpha-2 country code
-     * @return Encoded country code
+     * @param country ISO 3166 alpha-2 country code.
+     * @return Encoded country code.
      */
     private static long encodeCountry(byte[] country) {
         return ((encodeChar(country[0]) << NKBSHIFT_COUNTRY_FL) | (encodeChar(country[1]) << NKBSHIFT_COUNTRY_SL));
@@ -49,8 +50,8 @@ public class NumKey {
     /**
      * Decode country code into 2-char byte array.
      *
-     * @param nk NumKey
-     * @return decoded ISO 3166 alpha-2 country code
+     * @param nk NumKey.
+     * @return decoded ISO 3166 alpha-2 country code.
      */
     private static byte[] decodeCountry(long nk) {
         return new byte[]{
@@ -62,8 +63,8 @@ public class NumKey {
     /**
      * Encode number string.
      *
-     * @param number byte array containing the Short code or E.164 LVN number
-     * @return Encoded number
+     * @param number byte array containing the Short code or E.164 LVN number.
+     * @return Encoded number.
      */
     private static long encodeNumber(byte[] number) {
         long num = 0;
@@ -82,10 +83,10 @@ public class NumKey {
     }
 
     /**
-     * Decode number into byte array
+     * Decode number into byte array.
      *
-     * @param nk NumKey
-     * @return Number byte array
+     * @param nk NumKey.
+     * @return Number byte array.
      */
     private static byte[] decodeNumber(long nk) {
         int size = (int) (nk & NKBMASK_LENGTH);
@@ -104,8 +105,8 @@ public class NumKey {
     /**
      * Encode numkey.
      *
-     * @param country ISO 3166 alpha-2 country code
-     * @param number  Short code or LVN number
+     * @param country ISO 3166 alpha-2 country code.
+     * @param number  Short code or LVN number.
      * @return NumKey 64 bit code.
      */
     public static long numkey(byte[] country, byte[] number) {
@@ -115,8 +116,8 @@ public class NumKey {
     /**
      * Encode numkey.
      *
-     * @param country ISO 3166 alpha-2 country code
-     * @param number  Short code or LVN number
+     * @param country ISO 3166 alpha-2 country code.
+     * @param number  Short code or LVN number.
      * @return NumKey 64 bit code.
      */
     public static long numkey(String country, String number) {
@@ -124,10 +125,10 @@ public class NumKey {
     }
 
     /**
-     * Decode a NumKey code to get the individual components
+     * Decode a NumKey code to get the individual components.
      *
      * @param nk NumKey code.
-     * @return country and number data as byte arrays
+     * @return country and number data as byte arrays.
      */
     public static NumData decodeNumkey(long nk) {
         NumData ret = new NumData();
@@ -140,7 +141,7 @@ public class NumKey {
      * Decode a NumKey code to get the individual components
      *
      * @param nk NumKey code.
-     * @return country and number data as strings
+     * @return country and number data as strings.
      */
     public static NumDataStr decodeNumkeyStr(long nk) {
         NumDataStr ret = new NumDataStr();
@@ -164,7 +165,7 @@ public class NumKey {
      * Returns NumKey hexadecimal string (16 characters).
      *
      * @param nk NumKey code.
-     * @return hexadecimal string
+     * @return hexadecimal string.
      */
     public static String numkeyHexString(long nk) {
         String s = Long.toUnsignedString(nk, 16);
@@ -175,7 +176,7 @@ public class NumKey {
      * Returns NumKey hexadecimal string (16 characters).
      *
      * @param nk NumKey code.
-     * @return hexadecimal byte array
+     * @return hexadecimal byte array.
      */
     public static byte[] numkeyHex(long nk) {
         return numkeyHexString(nk).getBytes();
@@ -200,5 +201,31 @@ public class NumKey {
     public static long parseNumkeyHex(byte[] ns) {
         String s = new String(ns);
         return parseNumkeyHex(s);
+    }
+
+    /**
+     * Encode a number string into long.
+     * The encoded number is always 15 digits long as it is either right-padded with zeros or truncated.
+     *
+     * @param number byte array containing the E.164 number or prefix (max 18 digits or it will be truncated).
+     * @return Encoded number.
+     */
+    public static long prefixkey(String number) {
+        long num = 0;
+        int b;
+        int i = 0;
+        byte[] bnum = number.getBytes();
+        int len = bnum.length;
+        if (len > PKNUMMAXLEN) {
+            len = PKNUMMAXLEN; // truncate number
+        }
+        for (i = 0; i < len; i++) {
+            b = (int) bnum[i] - '0';
+            num = (num * 10) + b;
+        }
+        for (i = len; i < PKNUMMAXLEN; i++) {
+            num = (num * 10); // zero right-padding
+        }
+        return num;
     }
 }

@@ -3,13 +3,13 @@ package numkey
 // numkey_test.go
 // @category   Libraries
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2019 Vonage
+// @copyright  2019-2022 Vonage
 // @license    see LICENSE file
 // @link       https://github.com/nexmoinc/numkey
 
 import "testing"
 
-// TNumKey contains test data
+// TNumKeyData contains test data.
 type TNumKeyData struct {
 	country string
 	number  string

@@ -690,6 +690,23 @@ numkeyTestData = [
 	(b"ZZ", b"601469829912013", 0xd6a23089b8e15cdf, b"d6a23089b8e15cdf"),
 ]
 
+# number, pk
+prefixkeyTestData = [
+	(b"", 0),
+	(b"0", 0),
+	(b"00", 0),
+	(b"00000000000000", 0),
+	(b"000000000000000", 0),
+	(b"0000000000000000", 0),
+	(b"000000000000001", 1),
+	(b"0000000000000019", 1),
+	(b"1", 100000000000000),
+	(b"10", 100000000000000),
+	(b"10000000000000", 100000000000000),
+	(b"100000000000000", 100000000000000),
+	(b"1000000000000000", 100000000000000),
+	(b"999999999999999", 999999999999999),
+]
 
 class TestFunctions(TestCase):
 
@@ -736,6 +753,10 @@ class TestFunctions(TestCase):
     def test_parse_numkey_hex_input_type(self):
         self.assertEqual(numkey.parse_numkey_hex(b"d6a23089b8e15cdf"), numkey.parse_numkey_hex("d6a23089b8e15cdf"))
 
+    def test_prefixkey(self):
+        for number, pk in prefixkeyTestData:
+            h = numkey.prefixkey(number)
+            self.assertEqual(h, pk)
 
 class TestBenchmark(object):
 
@@ -753,3 +774,6 @@ class TestBenchmark(object):
 
     def test_parse_numkey_hex_benchmark(self, benchmark):
         benchmark(numkey.parse_numkey_hex, b'b800181c910d8000')
+
+    def test_prefixkey_benchmark(self, benchmark):
+        benchmark(numkey.prefixkey, b'123456789012345')

@@ -4,7 +4,7 @@
 //
 // @category   Libraries
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2019 Vonage
+// @copyright  2019-2022 Vonage
 // @license    see LICENSE file
 // @link       https://github.com/nexmoinc/numkey
 
@@ -14,6 +14,7 @@
 #include <Python.h>
 #include "../../c/src/numkey/hex.h"
 #include "../../c/src/numkey/numkey.h"
+#include "../../c/src/numkey/prefixkey.h"
 #include "pynumkey.h"
 
 #ifndef Py_UNUSED // This is already defined for Python 3.4 onwards
@@ -89,6 +90,21 @@ static PyObject* py_parse_numkey_hex(PyObject *Py_UNUSED(ignored), PyObject *arg
     return Py_BuildValue("K", h);
 }
 
+static PyObject* py_prefixkey(PyObject *Py_UNUSED(ignored), PyObject *args, PyObject *keywds)
+{
+    const char *number;
+    Py_ssize_t sizenumber;
+    static char *kwlist[] = {"number", NULL};
+    if (!PyArg_ParseTupleAndKeywords(args, keywds, "s#", kwlist, &number, &sizenumber))
+        return NULL;
+    if (sizenumber < 1)
+    {
+        return Py_BuildValue("K", 0);
+    }
+    uint64_t h = prefixkey(number, (size_t)sizenumber);
+    return Py_BuildValue("K", h);
+}
+
 // ---
 
 static PyMethodDef PyNumKeyMethods[] =
@@ -99,6 +115,7 @@ static PyMethodDef PyNumKeyMethods[] =
     {"compare_numkey_country", (PyCFunction)py_compare_numkey_country, METH_VARARGS|METH_KEYWORDS, PYCOMPARENUMKEYCOUNTRY_DOCSTRING},
     {"numkey_hex", (PyCFunction)py_numkey_hex, METH_VARARGS|METH_KEYWORDS, PYNUMKEYHEX_DOCSTRING},
     {"parse_numkey_hex", (PyCFunction)py_parse_numkey_hex, METH_VARARGS|METH_KEYWORDS, PYPARSENUMKEYSTRING_DOCSTRING},
+    {"prefixkey", (PyCFunction)py_prefixkey, METH_VARARGS|METH_KEYWORDS, PYPREFIXKEY_DOCSTRING},
     {NULL, NULL, 0, NULL}
 };
 

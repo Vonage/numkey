@@ -3,7 +3,7 @@
 //
 // @category   Libraries
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2019-2020 Vonage
+// @copyright  2019-2022 Vonage
 // @license    see LICENSE file
 // @link       https://github.com/nexmoinc/numkey
 package numkey
@@ -14,6 +14,7 @@ package numkey
 #include <inttypes.h>
 #include "../../c/src/numkey/hex.h"
 #include "../../c/src/numkey/numkey.h"
+#include "../../c/src/numkey/prefixkey.h"
 */
 import "C"
 import "unsafe"
@@ -82,4 +83,14 @@ func ParseHex(s string) uint64 {
 	b := StringToNTBytesN(s, len(s)+1)
 	p := unsafe.Pointer(&b[0]) // #nosec
 	return uint64(C.parse_numkey_hex((*C.char)(p)))
+}
+
+// PrefixKey encodes a number string into uint64.
+// The encoded number is always 15 digits long as it is either right-padded with zeros or truncated.
+// The prefixkey is safe to cast as int64 as it is always smaller than max int64.
+func PrefixKey(number string) uint64 {
+	numsize := len(number)
+	bnumber := StringToNTBytesN(number, numsize+1)
+	pnumber := unsafe.Pointer(&bnumber[0]) // #nosec
+	return uint64(C.prefixkey((*C.char)(pnumber), C.size_t(numsize)))
 }

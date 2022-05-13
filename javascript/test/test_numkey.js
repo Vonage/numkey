@@ -15,6 +15,7 @@ const {
     compareNumKeyCountry,
     numKeyString,
     parseHex,
+    prefixKey,
 } = require(process.argv[2]);
 
 var k_test_size = 676;
@@ -2870,6 +2871,78 @@ function test_parseHex() {
     return errors;
 }
 
+function test_prefixKey() {
+    var errors = 0;
+    var i;
+    var test_data = [
+        ["", {
+            "hi": 0,
+            "lo": 0
+        }],
+        ["0", {
+            "hi": 0,
+            "lo": 0
+        }],
+        ["00", {
+            "hi": 0,
+            "lo": 0
+        }],
+        ["00000000000000", {
+            "hi": 0,
+            "lo": 0
+        }],
+        ["000000000000000", {
+            "hi": 0,
+            "lo": 0
+        }],
+        ["0000000000000000", {
+            "hi": 0,
+            "lo": 0
+        }],
+        ["000000000000001", {
+            "hi": 0,
+            "lo": 1
+        }],
+        ["0000000000000019", {
+            "hi": 0,
+            "lo": 1
+        }],
+        ["1", {
+            "hi": 23283,
+            "lo": 276447232
+        }],
+        ["10", {
+            "hi": 23283,
+            "lo": 276447232
+        }],
+        ["10000000000000", {
+            "hi": 23283,
+            "lo": 276447232
+        }],
+        ["100000000000000", {
+            "hi": 23283,
+            "lo": 276447232
+        }],
+        ["1000000000000000", {
+            "hi": 23283,
+            "lo": 276447232
+        }],
+        ["999999999999999", {
+            "hi": 232830,
+            "lo": 2764472319
+        }],
+    ];
+    var pk;
+    for (i = 0; i < 14; i++) {
+        pk = prefixKey(test_data[i][0]);
+        if ((pk.hi != test_data[i][1].hi) || (pk.lo != test_data[i][1].lo)) {
+            console.error("(", i, "): Unexpected prefixkey: expected ", test_data[i][1], ", got ", pk);
+            ++errors;
+        }
+    }
+    return errors;
+}
+
 var errors = 0;
 
 //gentestmap();
@@ -2881,6 +2954,7 @@ errors += test_decodeNumKey_long();
 errors += test_compareNumKeyCountry();
 errors += test_numKeyString();
 errors += test_parseHex();
+errors += test_prefixKey();
 
 if (errors > 0) {
     console.log("FAILED: " + errors);
