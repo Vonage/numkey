@@ -15,6 +15,7 @@ package numkey
 #include "../../c/src/numkey/hex.h"
 #include "../../c/src/numkey/numkey.h"
 #include "../../c/src/numkey/prefixkey.h"
+#include "../../c/src/numkey/countrykey.h"
 */
 import "C"
 import "unsafe"
@@ -93,4 +94,23 @@ func PrefixKey(number string) uint64 {
 	bnumber := StringToNTBytesN(number, numsize+1)
 	pnumber := unsafe.Pointer(&bnumber[0]) // #nosec
 	return uint64(C.prefixkey((*C.char)(pnumber), C.size_t(numsize)))
+}
+
+// CountryKey encodes ISO 3166 alpha-2 country code into uint16.
+func CountryKey(country string) uint16 {
+	countrysize := len(country)
+	if countrysize != 2 {
+		return 0
+	}
+	bcountry := StringToNTBytesN(country, countrysize+1)
+	pcountry := unsafe.Pointer(&bcountry[0]) // #nosec
+	return uint16(C.countrykey((*C.char)(pcountry)))
+}
+
+// DecodeCountryKey decodes countrykey into ISO 3166 alpha-2 country code.
+func DecodeCountryKey(ck uint16) string {
+	cstr := C.malloc(3)
+	defer C.free(unsafe.Pointer(cstr)) // #nosec
+	C.decode_countrykey(C.uint16_t(ck), (*C.char)(cstr))
+	return C.GoStringN((*C.char)(cstr), C.int(2))
 }

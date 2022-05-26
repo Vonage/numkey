@@ -211,10 +211,21 @@ public class NumKey {
      * @return Encoded number.
      */
     public static long prefixkey(String number) {
+        return prefixkey(number.getBytes());
+    }
+
+    /**
+     * Encode a number string into long.
+     * The encoded number is always 15 digits long as it is either right-padded with zeros or truncated.
+     *
+     * @param number byte array containing the E.164 number or prefix (max 18 digits or it will be truncated).
+     * @return Encoded number.
+     */
+    public static long prefixkey(byte[] number) {
         long num = 0;
         int b;
         int i = 0;
-        byte[] bnum = number.getBytes();
+        byte[] bnum = number;
         int len = bnum.length;
         if (len > PKNUMMAXLEN) {
             len = PKNUMMAXLEN; // truncate number
@@ -227,5 +238,48 @@ public class NumKey {
             num = (num * 10); // zero right-padding
         }
         return num;
+    }
+
+    /**
+     * Encode country code into a short number.
+     *
+     * @param country ISO 3166 alpha-2 country code.
+     * @return Encoded country code.
+     */
+    public static short countrykey(String country) {
+        return countrykey(country.getBytes());
+    }
+
+    /**
+     * Encode country code into a short number.
+     *
+     * @param country ISO 3166 alpha-2 country code.
+     * @return Encoded country code.
+     */
+    public static short countrykey(byte[] country) {
+        return (short) (((country[0]) << 8) | (country[1]));
+    }
+
+    /**
+     * Decode countrykey into 2-char byte array.
+     *
+     * @param ck CountryKey.
+     * @return decoded ISO 3166 alpha-2 country code.
+     */
+    public static String decodeCountrykeyString(short ck) {
+        return new String(decodeCountrykey(ck));
+    }
+
+    /**
+     * Decode countrykey into 2-char byte array.
+     *
+     * @param ck CountryKey.
+     * @return decoded ISO 3166 alpha-2 country code.
+     */
+    public static byte[] decodeCountrykey(short ck) {
+        return new byte[]{
+                (byte) ((ck & 0xFF00) >>> 8),
+                (byte) (ck & 0x00FF),
+        };
     }
 }

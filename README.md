@@ -6,11 +6,15 @@
 
 *Numerical Encoding for Short Codes or E.164 LVN*
 
+Also includes:
+    * *prefixkey*  To encode number prefixes or E.164 LVN as uint64.
+    * *countrykey* To encode ISO 3166 alpha-2 country code as uint16.
+
 [![check](https://github.com/nexmoinc/numkey/actions/workflows/check.yaml/badge.svg)](https://github.com/nexmoinc/numkey/actions/workflows/check.yaml)
 [![whitesource](https://github.com/nexmoinc/numkey/actions/workflows/whitesource.yaml/badge.svg)](https://github.com/nexmoinc/numkey/actions/workflows/whitesource.yaml)
 
 * **category**    Library
-* **copyright**   2019-2020 Vonage
+* **copyright**   2019-2022 Vonage
 * **license**     [MIT](https://github.com/nexmoinc/numkey/blob/main/LICENSE)
 * **link**        https://github.com/nexmoinc/numkey
 

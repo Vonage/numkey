@@ -163,6 +163,14 @@ function prefixKey(number) {
     };
 }
 
+function countryKey(country) {
+    return (country.charCodeAt(0) << 8) | (country.charCodeAt(1));
+}
+
+function decodeCountryKey(ck) {
+    return String.fromCharCode((ck & 0xFF00) >> 8, (ck & 0x00FF));
+}
+
 if (typeof(module) !== 'undefined') {
     module.exports = {
         numKey: numKey,
@@ -171,5 +179,7 @@ if (typeof(module) !== 'undefined') {
         numKeyString: numKeyString,
         parseHex: parseHex,
         prefixKey: prefixKey,
+        countryKey: countryKey,
+        decodeCountryKey: decodeCountryKey,
     }
 }

@@ -18,6 +18,8 @@ static PyObject *py_compare_numkey_country(PyObject *self, PyObject *args, PyObj
 static PyObject *py_numkey_hex(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *py_parse_numkey_hex(PyObject *self, PyObject *args, PyObject *keywds);
 static PyObject *py_prefixkey(PyObject *self, PyObject *args, PyObject *keywds);
+static PyObject *py_countrykey(PyObject *self, PyObject *args, PyObject *keywds);
+static PyObject *py_decode_countrykey(PyObject *self, PyObject *args, PyObject *keywds);
 
 PyMODINIT_FUNC initnumkey(void);
 
@@ -113,7 +115,6 @@ PyMODINIT_FUNC initnumkey(void);
 ">>> parse_numkey_hex(b'c2ab5e44f21a947f')\n"                          \
 "14027409114588157055"
 
-
 #define PYPREFIXKEY_DOCSTRING "Encode a number string into uint64.\n"  \
 "The encoded number is always 15 digits long as it is either right-padded with zeros or truncated.\n"\
 "\n"\
@@ -131,6 +132,40 @@ PyMODINIT_FUNC initnumkey(void);
 "-------\n"\
 ">>> prefixkey(number=b'123456789012345')\n"                           \
 "123456789012345"
+
+#define COUNTRYKEY_DOCSTRING "Encode ISO 3166 alpha-2 country code into uint16.\n"\
+"\n"\
+"Parameters\n"\
+"----------\n"                                                         \
+"country : str or bytes\n"                                             \
+"    ISO 3166 alpha-2 country code.\n"                                 \
+"\n"\
+"Returns\n"\
+"-------\n"\
+"int:\n"\
+"    countrykey.\n"                                                    \
+"\n"\
+"Example\n"\
+"-------\n"\
+">>> countrykey(country=b'ZZ')\n"                                      \
+"23130"
+
+#define DECODECOUNTRYKEY_DOCSTRING "Decode countrykey into ISO 3166 alpha-2 country code.\n"\
+"\n"\
+"Parameters\n"\
+"----------\n"                                                         \
+"ck : uint16\n"                                                        \
+"    countrykey.\n"                                                    \
+"\n"\
+"Returns\n"\
+"-------\n"\
+"bytes:\n"                                                             \
+"    ISO 3166 alpha-2 country code.\n"                                 \
+"\n"\
+"Example\n"\
+"-------\n"\
+">>> decode_countrykey(ck=23130)\n"                                    \
+"b'ZZ'"
 
 #if defined(__SUNPRO_C) || defined(__hpux) || defined(_AIX)
 #define inline

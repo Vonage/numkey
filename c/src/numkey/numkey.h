@@ -64,7 +64,7 @@ static inline uint64_t encode_char(int c)
 }
 
 /**
- * Encode country code.
+ * Encode country code for numkey.
  *
  * @param country ISO 3166 alpha-2 country code.
  *

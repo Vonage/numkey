@@ -15,6 +15,7 @@
 #include "../../c/src/numkey/hex.h"
 #include "../../c/src/numkey/numkey.h"
 #include "../../c/src/numkey/prefixkey.h"
+#include "../../c/src/numkey/countrykey.h"
 #include "pynumkey.h"
 
 #ifndef Py_UNUSED // This is already defined for Python 3.4 onwards
@@ -105,6 +106,32 @@ static PyObject* py_prefixkey(PyObject *Py_UNUSED(ignored), PyObject *args, PyOb
     return Py_BuildValue("K", h);
 }
 
+static PyObject* py_countrykey(PyObject *Py_UNUSED(ignored), PyObject *args, PyObject *keywds)
+{
+    const char *country;
+    Py_ssize_t sizecountry;
+    static char *kwlist[] = {"country", NULL};
+    if (!PyArg_ParseTupleAndKeywords(args, keywds, "s#", kwlist, &country, &sizecountry))
+        return NULL;
+    if (sizecountry != 2)
+    {
+        return Py_BuildValue("h", 0);
+    }
+    uint16_t h = countrykey(country);
+    return Py_BuildValue("h", h);
+}
+
+static PyObject* py_decode_countrykey(PyObject *Py_UNUSED(ignored), PyObject *args, PyObject *keywds)
+{
+    uint16_t ck;
+    static char *kwlist[] = {"ck", NULL};
+    if (!PyArg_ParseTupleAndKeywords(args, keywds, "h", kwlist, &ck))
+        return NULL;
+    char h[3];
+    decode_countrykey(ck, &h);
+    return PyBytes_FromString(h);
+}
+
 // ---
 
 static PyMethodDef PyNumKeyMethods[] =
@@ -116,6 +143,8 @@ static PyMethodDef PyNumKeyMethods[] =
     {"numkey_hex", (PyCFunction)py_numkey_hex, METH_VARARGS|METH_KEYWORDS, PYNUMKEYHEX_DOCSTRING},
     {"parse_numkey_hex", (PyCFunction)py_parse_numkey_hex, METH_VARARGS|METH_KEYWORDS, PYPARSENUMKEYSTRING_DOCSTRING},
     {"prefixkey", (PyCFunction)py_prefixkey, METH_VARARGS|METH_KEYWORDS, PYPREFIXKEY_DOCSTRING},
+    {"countrykey", (PyCFunction)py_countrykey, METH_VARARGS|METH_KEYWORDS, COUNTRYKEY_DOCSTRING},
+    {"decode_countrykey", (PyCFunction)py_decode_countrykey, METH_VARARGS|METH_KEYWORDS, DECODECOUNTRYKEY_DOCSTRING},
     {NULL, NULL, 0, NULL}
 };
 
