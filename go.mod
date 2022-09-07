@@ -3,7 +3,7 @@ module github.com/nexmoinc/numkey
 go 1.19
 
 require (
-	github.com/jstemmer/go-junit-report v0.9.1
+	github.com/jstemmer/go-junit-report v1.0.0
 	github.com/rakyll/gotest v0.0.6
 )
 
