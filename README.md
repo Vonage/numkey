@@ -11,7 +11,7 @@ Also includes:
     * *countrykey* To encode ISO 3166 alpha-2 country code as uint16.
 
 [![check](https://github.com/nexmoinc/numkey/actions/workflows/check.yaml/badge.svg)](https://github.com/nexmoinc/numkey/actions/workflows/check.yaml)
-[![whitesource](https://github.com/nexmoinc/numkey/actions/workflows/whitesource.yaml/badge.svg)](https://github.com/nexmoinc/numkey/actions/workflows/whitesource.yaml)
+
 
 * **category**    Library
 * **copyright**   2019-2022 Vonage
