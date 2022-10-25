@@ -30,7 +30,7 @@ class RunTests(Command):
 
 setup(
     name="numkey",
-    version="1.4.6.1",
+    version="1.4.7.1",
     keywords=("numkey E.164 shortcode lvn did encoding"),
     description="NumKey Bindings for Python",
     long_description=read("../README.md"),
@@ -72,6 +72,7 @@ setup(
     extras_require={
         "test": [
             "coverage",
+            "py",
             "pytest",
             "pytest-benchmark",
             "pytest-cov",
