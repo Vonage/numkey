@@ -13,6 +13,9 @@ env:
   PYTHON_VERSION: 3.x
   JAVA_VERSION: 11
 
+permissions:
+  contents: read
+
 jobs:
   c:
     runs-on: ubuntu-latest
