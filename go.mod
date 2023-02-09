@@ -1,6 +1,6 @@
 module github.com/nexmoinc/numkey
 
-go 1.19
+go 1.20
 
 require (
 	github.com/jstemmer/go-junit-report v1.0.0
