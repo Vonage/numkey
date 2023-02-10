@@ -1,6 +1,6 @@
 site_name: "numkey"
 site_description: "Documentation on the numkey library"
-repo_url: https://github.com/nexmoinc/numkey
+repo_url: https://github.com/vonage/numkey
 edit_uri: edit/main/
 repo_name: "GitHub"
 docs_dir: .

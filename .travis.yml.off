@@ -40,7 +40,7 @@ matrix:
       script:
         - make c
       #after_success:
-      #  - coveralls-lcov /home/travis/build/nexmoinc/numkey/c/target/test/coverage/numkey.info
+      #  - coveralls-lcov /home/travis/build/vonage/numkey/c/target/test/coverage/numkey.info
     - language: go
       go: "1.16"
       script:

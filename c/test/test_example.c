@@ -1,5 +1,5 @@
 // Usage example for NumKey
-// https://github.com/nexmoinc/numkey
+// https://github.com/vonage/numkey
 
 #include <inttypes.h>
 #include <stdio.h>

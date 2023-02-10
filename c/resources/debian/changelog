@@ -1,7 +1,7 @@
 ~#PKGNAME#~ (~#VERSION#~-~#RELEASE#~) UNRELEASED; urgency=low
 
   * Please check the
-    https://github.com/nexmoinc/numkey
+    https://github.com/vonage/numkey
     commit history
 
  -- Nicola Asuni <nicola.asuni@vonage.com>  ~#DATE#~

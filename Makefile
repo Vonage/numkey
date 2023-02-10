@@ -1,17 +1,17 @@
 # MAKEFILE
 #
 # @author      Nicola Asuni <nicola.asuni@vonage.com>
-# @link        https://github.com/nexmoinc/numkey
+# @link        https://github.com/vonage/numkey
 # ------------------------------------------------------------------------------
 
 SHELL=/bin/bash
 .SHELLFLAGS=-o pipefail -c
 
 # CVS path (path to the parent dir containing the project)
-CVSPATH=github.com/nexmoinc
+CVSPATH=github.com/vonage
 
 # Project vendor
-VENDOR=nexmoinc
+VENDOR=vonage
 
 # Project name
 PROJECT=numkey
@@ -114,7 +114,7 @@ pubdocs:
 	mkdir -p ./target/DOCS/python
 	cp -r ./python/target/doc/numkey.html ./target/DOCS/python/
 	cp ./resources/doc/index.html ./target/DOCS/
-	git clone git@github.com:nexmoinc/numkey.git ./target/gh-pages
+	git clone git@github.com:vonage/numkey.git ./target/gh-pages
 	cd target/gh-pages && git checkout gh-pages
 	mv -f ./target/gh-pages/.git ./target/DOCS/
 	rm -rf ./target/gh-pages

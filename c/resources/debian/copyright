@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: numkey
 Upstream-Contact: Support <ops@nexmo.com>
-Source: https://github.com/nexmoinc/numkey
+Source: https://github.com/vonage/numkey
 
 Files: *
 Copyright: Copyright 2019 Vonage; 2017-2018 GENOMICS plc; 2017-2019 Nicola Asuni (binsearch)
@@ -9,4 +9,4 @@ License: MIXED
 
 License: MIXED
  Full license and copyright terms are available at:
- /usr/share/doc/nexmoinc-numkey/LICENSE
+ /usr/share/doc/vonage-numkey/LICENSE

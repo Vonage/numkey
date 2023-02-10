@@ -4,7 +4,7 @@
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
 // @copyright  2019-2020 Vonage
 // @license    see LICENSE file
-// @link       https://github.com/nexmoinc/numkey
+// @link       https://github.com/vonage/numkey
 package numkey
 
 import (

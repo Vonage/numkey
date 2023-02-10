@@ -6,7 +6,7 @@
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
 // @copyright  2022-2022 Vonage
 // @license    see LICENSE file
-// @link       https://github.com/nexmoinc/numkey
+// @link       https://github.com/vonage/numkey
 
 /**
  * @file prefixkey.h

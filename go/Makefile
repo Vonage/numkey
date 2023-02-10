@@ -1,17 +1,17 @@
 # MAKEFILE
 #
 # @author      Nicola Asuni <info@tecnick.com>
-# @link        https://github.com/nexmoinc/numkey
+# @link        https://github.com/vonage/numkey
 # ------------------------------------------------------------------------------
 
 SHELL=/bin/bash
 .SHELLFLAGS=-o pipefail -c
 
 # CVS path (path to the parent dir containing the project)
-CVSPATH=github.com/nexmoinc
+CVSPATH=github.com/vonage
 
 # Project vendor
-VENDOR=nexmoinc
+VENDOR=vonage
 
 # Project name
 PROJECT=numkey

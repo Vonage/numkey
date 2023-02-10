@@ -1,4 +1,4 @@
-module github.com/nexmoinc/numkey
+module github.com/vonage/numkey
 
 go 1.20
 
