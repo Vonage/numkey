@@ -11,7 +11,7 @@ SHELL=/bin/bash
 VENDOR=Vonage
 
 # CVS path (path to the parent dir containing the project)
-CVSPATH=github.com/Vonage
+CVSPATH=github.com/${VENDOR}
 
 # Project name
 PROJECT=numkey
