@@ -6,7 +6,7 @@
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
 // @copyright  2019 Vonage
 // @license    see LICENSE file
-// @link       https://github.com/vonage/numkey
+// @link       https://github.com/Vonage/numkey
 
 // Test for numkey
 

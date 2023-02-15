@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
 export DH_VERBOSE=1
-export DH_GOPKG := github.com/vonage/numkey
+export DH_GOPKG := github.com/Vonage/numkey
 %:
 	dh $@

@@ -6,7 +6,7 @@
 // @author     Nicola Asuni <info@tecnick.com>
 // @copyright  2017-2018 GENOMICS plc <https://www.genomicsplc.com>
 // @license    MIT (see LICENSE)
-// @link       https://github.com/vonage/numkey
+// @link       https://github.com/Vonage/numkey
 //
 // LICENSE
 //

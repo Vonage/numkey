@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Usage example for NumKey Python wrapper
-# https://github.com/vonage/numkey
+# https://github.com/Vonage/numkey
 
 import numkey as nk
 

@@ -1,4 +1,4 @@
-module github.com/vonage/numkey
+module github.com/Vonage/numkey
 
 go 1.20
 

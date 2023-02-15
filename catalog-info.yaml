@@ -5,8 +5,8 @@ metadata:
   name: numkey
   description: Numerical Encoding for Short Codes or E.164 LVN
   annotations:
-    github.com/project-slug: vonage/numkey
-    backstage.io/techdocs-ref: url:https://github.com/vonage/numkey/tree/main
+    github.com/project-slug: Vonage/numkey
+    backstage.io/techdocs-ref: url:https://github.com/Vonage/numkey/tree/main
 spec:
   type: library
   owner: vonage/nexmo-oss

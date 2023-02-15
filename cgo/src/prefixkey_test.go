@@ -5,7 +5,7 @@ package numkey
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
 // @copyright  2019-2022 Vonage
 // @license    see LICENSE file
-// @link       https://github.com/vonage/numkey
+// @link       https://github.com/Vonage/numkey
 
 import "testing"
 

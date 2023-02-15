@@ -10,13 +10,13 @@ Also includes:
     * *prefixkey*  To encode number prefixes or E.164 LVN as uint64.
     * *countrykey* To encode ISO 3166 alpha-2 country code as uint16.
 
-[![check](https://github.com/vonage/numkey/actions/workflows/check.yaml/badge.svg)](https://github.com/vonage/numkey/actions/workflows/check.yaml)
+[![check](https://github.com/Vonage/numkey/actions/workflows/check.yaml/badge.svg)](https://github.com/Vonage/numkey/actions/workflows/check.yaml)
 
 
 * **category**    Library
 * **copyright**   2019-2022 Vonage
-* **license**     [MIT](https://github.com/vonage/numkey/blob/main/LICENSE)
-* **link**        https://github.com/vonage/numkey
+* **license**     [MIT](https://github.com/Vonage/numkey/blob/main/LICENSE)
+* **link**        https://github.com/Vonage/numkey
 
 
 -----------------------------------------------------------------
@@ -214,7 +214,7 @@ make test
 <a name="clib"></a>
 ## C Library
 
-* [C Usage Examples](https://github.com/vonage/numkey/blob/main/c/test/test_example.c)
+* [C Usage Examples](https://github.com/Vonage/numkey/blob/main/c/test/test_example.c)
 
 The reference implementation of this library is written in header-only C programming language in a way that is also compatible with C++.
 
@@ -233,7 +233,7 @@ This tools requires the positional arguments `COUNTRY`, `NUMBER` and returns the
 <a name="cgolib"></a>
 ## Go Library C wrapper
 
-* [Go Usage Examples](https://github.com/vonage/numkey/blob/main/cgo/example/main.go)
+* [Go Usage Examples](https://github.com/Vonage/numkey/blob/main/cgo/example/main.go)
 
 A go wrapper is located in the `cgo` directory.  
 Use the "`make cgo`" command to test the GO wrapper and generate reports.
@@ -242,7 +242,7 @@ Use the "`make cgo`" command to test the GO wrapper and generate reports.
 <a name="golib"></a>
 ## Go Library (golang)
 
-* [Go Usage Examples](https://github.com/vonage/numkey/blob/main/go/example/main.go)
+* [Go Usage Examples](https://github.com/Vonage/numkey/blob/main/go/example/main.go)
 
 A native Go implementation is located in the `go` directory.  
 Use the "`make go`" command to test the GO version and generate reports.
@@ -251,7 +251,7 @@ Use the "`make go`" command to test the GO version and generate reports.
 <a name="pythonlib"></a>
 ## Python Module
 
-* [Python Usage Examples](https://github.com/vonage/numkey/blob/main/python/test/example.py)
+* [Python Usage Examples](https://github.com/Vonage/numkey/blob/main/python/test/example.py)
 
 The python module is located in the `python` directory.
 Use the "`make python`" command to test the Python wrapper and generate reports.

@@ -1,7 +1,7 @@
 # MAKEFILE
 #
 # @author      Nicola Asuni <info@tecnick.com>
-# @link        https://github.com/vonage/numkey
+# @link        https://github.com/Vonage/numkey
 # ------------------------------------------------------------------------------
 
 SHELL=/bin/bash

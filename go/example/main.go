@@ -1,12 +1,12 @@
 package main
 
 // Usage example for NumKey GO version
-// https://github.com/vonage/numkey
+// https://github.com/Vonage/numkey
 
 import (
 	"fmt"
 
-	nk "github.com/vonage/numkey/go/src"
+	nk "github.com/Vonage/numkey/go/src"
 )
 
 func main() {
