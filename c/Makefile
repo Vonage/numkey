@@ -7,14 +7,17 @@
 SHELL=/bin/bash
 .SHELLFLAGS=-o pipefail -c
 
-# CVS path (path to the parent dir containing the project)
-CVSPATH=github.com/vonage
-
 # Project owner
-OWNER=vonage
+OWNER=Vonage
 
 # Project vendor
-VENDOR=vonage
+VENDOR=${OWNER}
+
+# Lowercase VENDOR name for Docker
+LCVENDOR=$(shell echo "${VENDOR}" | tr '[:upper:]' '[:lower:]')
+
+# CVS path (path to the parent dir containing the project)
+CVSPATH=github.com/${VENDOR}
 
 # Project name
 PROJECT=numkey
@@ -29,7 +32,7 @@ RELEASE=$(shell cat ../RELEASE)
 CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 # Name of RPM or DEB package
-PKGNAME=${VENDOR}-${PROJECT}-headers
+PKGNAME=${LCVENDOR}-${PROJECT}-headers
 
 # Path for binary files (where the executable files will be installed)
 LIBPATH=usr/include/$(VENDOR)/$(PROJECT)/

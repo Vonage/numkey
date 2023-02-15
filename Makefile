@@ -7,8 +7,14 @@
 SHELL=/bin/bash
 .SHELLFLAGS=-o pipefail -c
 
+# Project owner
+OWNER=Vonage
+
 # Project vendor
-VENDOR=Vonage
+VENDOR=${OWNER}
+
+# Lowercase VENDOR name for Docker
+LCVENDOR=$(shell echo "${VENDOR}" | tr '[:upper:]' '[:lower:]')
 
 # CVS path (path to the parent dir containing the project)
 CVSPATH=github.com/${VENDOR}
@@ -48,7 +54,7 @@ help:
 	@echo "    make tag        : Tag the Git repository"
 	@echo ""
 
-all: clean c cgo go javascript python
+all: clean c cgo go java javascript python
 
 # Build and test the C version
 .PHONY: c
@@ -97,7 +103,7 @@ dbuild:
 	@mkdir -p $(TARGETDIR)
 	@rm -rf $(TARGETDIR)/*
 	@echo 0 > $(TARGETDIR)/make.exit
-	CVSPATH=$(CVSPATH) VENDOR=$(VENDOR) PROJECT=$(PROJECT) MAKETARGET='$(MAKETARGET)' $(CURRENTDIR)/dockerbuild.sh
+	CVSPATH=$(CVSPATH) VENDOR=$(LCVENDOR) PROJECT=$(PROJECT) MAKETARGET='$(MAKETARGET)' $(CURRENTDIR)/dockerbuild.sh
 	@exit `cat $(TARGETDIR)/make.exit`
 
 # Publish Documentation in GitHub (requires writing permissions)

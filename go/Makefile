@@ -7,11 +7,17 @@
 SHELL=/bin/bash
 .SHELLFLAGS=-o pipefail -c
 
-# CVS path (path to the parent dir containing the project)
-CVSPATH=github.com/vonage
+# Project owner
+OWNER=Vonage
 
 # Project vendor
-VENDOR=vonage
+VENDOR=${OWNER}
+
+# Lowercase VENDOR name for Docker
+LCVENDOR=$(shell echo "${VENDOR}" | tr '[:upper:]' '[:lower:]')
+
+# CVS path (path to the parent dir containing the project)
+CVSPATH=github.com/${VENDOR}
 
 # Project name
 PROJECT=numkey
@@ -23,7 +29,7 @@ VERSION=$(shell cat ../VERSION)
 RELEASE=$(shell cat ../RELEASE)
 
 # Name of RPM or DEB package
-PKGNAME=${VENDOR}-${PROJECT}
+PKGNAME=${LCVENDOR}-${PROJECT}
 
 # Current directory
 CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))

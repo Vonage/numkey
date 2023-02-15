@@ -18,8 +18,8 @@ set -e -u +x
 : ${CVSPATH:=project}
 : ${VENDOR:=vendor}
 : ${PROJECT:=project}
-: ${SSH_PRIVATE_KEY:=$(cat ~/.ssh/id_rsa)}
-: ${SSH_PUBLIC_KEY:=$(cat ~/.ssh/id_rsa.pub)}
+: ${SSH_PRIVATE_KEY:=$(cat ~/.ssh/id_rsa || cat ~/.ssh/id_ed25519)}
+: ${SSH_PUBLIC_KEY:=$(cat ~/.ssh/id_rsa.pub || cat ~/.ssh/id_ed25519.pub)}
 
 # make target to execute
 : ${MAKETARGET:=all}
@@ -38,6 +38,7 @@ PRJPATH=/root/src/${CVSPATH}/${PROJECT}
 #       so in case of error we can continue without interrupting this script.
 cat > Dockerfile.test <<- EOM
 FROM ${DOCKERDEV}
+ENV PATH=/usr/local/go/bin:$PATH
 ARG SSH_PRIVATE_KEY=""
 ARG SSH_PUBLIC_KEY=""
 RUN \\
