@@ -9,5 +9,5 @@ metadata:
     backstage.io/techdocs-ref: url:https://github.com/Vonage/numkey/tree/main
 spec:
   type: library
-  owner: vonage/nexmo-oss
+  owner: Vonage/nexmo-oss
   lifecycle: production

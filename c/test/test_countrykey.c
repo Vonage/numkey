@@ -6,7 +6,7 @@
 // @author     Nicola Asuni <nicola.asuni@vonage.com>
 // @copyright  2019-2022 Vonage
 // @license    see LICENSE file
-// @lick       https://github.com/vonage/countrykey
+// @lick       https://github.com/Vonage/countrykey
 
 // Test for countrykey
 
