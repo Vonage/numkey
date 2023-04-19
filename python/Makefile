@@ -52,7 +52,7 @@ clean:
 # Generate source code documentation
 .PHONY: doc
 doc:
-	pydoc -p 1234 $(PROJECT)
+	pydoc3 -p 1234 $(PROJECT)
 
 # Format the source code
 .PHONY: format

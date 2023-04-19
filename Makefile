@@ -34,6 +34,11 @@ CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 # Target directory
 TARGETDIR=$(CURRENTDIR)target
 
+# Docker command
+ifeq ($(DOCKER),)
+	DOCKER=docker
+endif
+
 # --- MAKE TARGETS ---
 
 # Display general help about this command
@@ -96,15 +101,21 @@ clean:
 	cd javascript && make clean
 	cd python && make clean
 	cd java && make clean
+	@mkdir -p $(TARGETDIR)
 
 # Build everything inside a Docker container
 .PHONY: dbuild
-dbuild:
+dbuild: dockerdev
 	@mkdir -p $(TARGETDIR)
 	@rm -rf $(TARGETDIR)/*
 	@echo 0 > $(TARGETDIR)/make.exit
 	CVSPATH=$(CVSPATH) VENDOR=$(LCVENDOR) PROJECT=$(PROJECT) MAKETARGET='$(MAKETARGET)' $(CURRENTDIR)/dockerbuild.sh
 	@exit `cat $(TARGETDIR)/make.exit`
+
+# Build a base development Docker image
+.PHONY: dockerdev
+dockerdev:
+	$(DOCKER) build --pull --tag ${LCVENDOR}/dev_${PROJECT} --file ./resources/docker/Dockerfile.dev ./resources/docker/
 
 # Publish Documentation in GitHub (requires writing permissions)
 .PHONY: pubdocs
@@ -113,13 +124,13 @@ pubdocs:
 	rm -rf ./target/gh-pages
 	mkdir -p ./target/DOCS/c
 	cp -r ./c/target/build/doc/html/* ./target/DOCS/c/
-	mkdir -p ./target/DOCS/cgo
-	cp -r ./cgo/target/docs/* ./target/DOCS/cgo/
-	mkdir -p ./target/DOCS/go
-	cp -r ./go/target/docs/* ./target/DOCS/go/
-	mkdir -p ./target/DOCS/python
-	cp -r ./python/target/doc/numkey.html ./target/DOCS/python/
-	cp ./resources/doc/index.html ./target/DOCS/
+	# mkdir -p ./target/DOCS/cgo
+	# cp -r ./cgo/target/docs/* ./target/DOCS/cgo/
+	# mkdir -p ./target/DOCS/go
+	# cp -r ./go/target/docs/* ./target/DOCS/go/
+	# mkdir -p ./target/DOCS/python
+	# cp -r ./python/target/doc/numkey.html ./target/DOCS/python/
+	# cp ./resources/doc/index.html ./target/DOCS/
 	git clone git@github.com:Vonage/numkey.git ./target/gh-pages
 	cd target/gh-pages && git checkout gh-pages
 	mv -f ./target/gh-pages/.git ./target/DOCS/

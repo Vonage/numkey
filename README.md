@@ -14,7 +14,7 @@ Also includes:
 
 
 * **category**    Library
-* **copyright**   2019-2022 Vonage
+* **copyright**   2019-2023 Vonage
 * **license**     [MIT](https://github.com/Vonage/numkey/blob/main/LICENSE)
 * **link**        https://github.com/Vonage/numkey
 
