@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: numkey
-Upstream-Contact: Support <ops@nexmo.com>
+Upstream-Contact: Support <api.eng.cet@vonage.com >
 Source: https://github.com/Vonage/numkey
 
 Files: *

@@ -39,5 +39,5 @@ rm -rf $RPM_BUILD_ROOT
 %docdir %{_docpath}
 
 %changelog
-* Fri Dec 06 2019 Vonage <ops@nexmo.com> 1.0.0-1
+* Fri Dec 06 2019 Vonage <api.eng.cet@vonage.com > 1.0.0-1
 - First RPM package.

@@ -30,12 +30,12 @@ class RunTests(Command):
 
 setup(
     name="numkey",
-    version="1.5.7.1",
+    version="1.5.6.1",
     keywords=("numkey E.164 shortcode lvn did encoding"),
     description="NumKey Bindings for Python",
     long_description=read("../README.md"),
     author="Nicola Asuni",
-    author_email="ops@nexmo.com",
+    author_email="api.eng.cet@vonage.com ",
     url="https://github.com/Vonage/numkey",
     license="RESERVED",
     platforms="Linux",
