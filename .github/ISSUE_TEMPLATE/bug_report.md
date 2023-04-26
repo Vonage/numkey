@@ -22,7 +22,6 @@ If applicable, copy the relevant logs to help explain your problem.
 
 **Environment:**
  - OS:
- - Go version:
  - Version:
 
 **Additional context**
