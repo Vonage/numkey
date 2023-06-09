@@ -4,31 +4,8 @@
 //
 // @category   Libraries
 // @author     Nicola Asuni <info@tecnick.com>
-// @copyright  2017-2018 GENOMICS plc <https://www.genomicsplc.com>
-// @license    MIT (see LICENSE)
 // @link       https://github.com/tecnickcom/variantkey
-//
-// LICENSE
-//
-// Copyright (c) 2017-2018 GENOMICS plc
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// @license    MIT (see https://github.com/tecnickcom/variantkey/blob/main/LICENSE)
 
 /**
  * @file set.h
@@ -92,8 +69,19 @@
 #define RADIX_SORT_ITERATION_BLOCK(A, B, BYTE, SHIFT) \
     for (i = 0; i < nitems; i++) \
     { \
-        v = (A)[i]; \
-        (B)[c##BYTE[((v >> (SHIFT)) & 0xff)]++] = v; \
+        v = A[i]; \
+        B[c##BYTE[((v >> SHIFT) & 0xff)]++] = v; \
+    }
+
+#define RADIX_SORT_ITERATION_INDEX_BLOCK(A, B, BYTE, SHIFT, ADX, BDX) \
+    for (i = 0; i < nitems; i++) \
+    { \
+        v = A[i]; \
+        t##BYTE = ((v >> SHIFT) & 0xff); \
+        j = c##BYTE[t##BYTE]; \
+        B[j] = v; \
+        c##BYTE[t##BYTE]++; \
+        ADX = BDX; \
     }
 
 /**
@@ -117,7 +105,7 @@ static inline void sort_uint64_t(uint64_t *arr, uint64_t *tmp, uint32_t nitems)
 }
 
 /**
- * Sorts in-memory an array of uint64_t values in ascending order ans store the permutation order index.
+ * Sorts in-memory an array of uint64_t values in ascending order and store the permutation order index.
  *
  * @param arr    Pointer to the first element of the array to process.
  * @param tmp    Pointer to the first element of a temporary array.
@@ -129,78 +117,14 @@ static inline void order_uint64_t(uint64_t *arr, uint64_t *tmp, uint32_t *idx, u
 {
     uint32_t j;
     RADIX_SORT_COUNT_BLOCK
-    for (i = 0; i < nitems; i++)
-    {
-        v = arr[i];
-        t7 = (v & 0xff);
-        j = c7[t7];
-        tmp[j] = v;
-        c7[t7]++;
-        tdx[j] = i;
-    }
-    for (i = 0; i < nitems; i++)
-    {
-        v = tmp[i];
-        t6 = ((v >> 8) & 0xff);
-        j = c6[t6];
-        arr[j] = v;
-        c6[t6]++;
-        idx[j] = tdx[i];
-    }
-    for (i = 0; i < nitems; i++)
-    {
-        v = arr[i];
-        t5 = ((v >> 16) & 0xff);
-        j = c5[t5];
-        tmp[j] = v;
-        c5[t5]++;
-        tdx[j] = idx[i];
-    }
-    for (i = 0; i < nitems; i++)
-    {
-        v = tmp[i];
-        t4 = ((v >> 24) & 0xff);
-        j = c4[t4];
-        arr[j] = v;
-        c4[t4]++;
-        idx[j] = tdx[i];
-    }
-    for (i = 0; i < nitems; i++)
-    {
-        v = arr[i];
-        t3 = ((v >> 32) & 0xff);
-        j = c3[t3];
-        tmp[j] = v;
-        c3[t3]++;
-        tdx[j] = idx[i];
-    }
-    for (i = 0; i < nitems; i++)
-    {
-        v = tmp[i];
-        t2 = ((v >> 40) & 0xff);
-        j = c2[t2];
-        arr[j] = v;
-        c2[t2]++;
-        idx[j] = tdx[i];
-    }
-    for (i = 0; i < nitems; i++)
-    {
-        v = arr[i];
-        t1 = ((v >> 48) & 0xff);
-        j = c1[t1];
-        tmp[j] = v;
-        c1[t1]++;
-        tdx[j] = idx[i];
-    }
-    for (i = 0; i < nitems; i++)
-    {
-        v = tmp[i];
-        t0 = ((v >> 56) & 0xff);
-        j = c0[t0];
-        arr[j] = v;
-        c0[t0]++;
-        idx[j] = tdx[i];
-    }
+    RADIX_SORT_ITERATION_INDEX_BLOCK(arr, tmp, 7, 0, tdx[j], i)
+    RADIX_SORT_ITERATION_INDEX_BLOCK(tmp, arr, 6, 8, idx[j], tdx[i])
+    RADIX_SORT_ITERATION_INDEX_BLOCK(arr, tmp, 5, 16, tdx[j], idx[i])
+    RADIX_SORT_ITERATION_INDEX_BLOCK(tmp, arr, 4, 24, idx[j], tdx[i])
+    RADIX_SORT_ITERATION_INDEX_BLOCK(arr, tmp, 3, 32, tdx[j], idx[i])
+    RADIX_SORT_ITERATION_INDEX_BLOCK(tmp, arr, 2, 40, idx[j], tdx[i])
+    RADIX_SORT_ITERATION_INDEX_BLOCK(arr, tmp, 1, 48, tdx[j], idx[i])
+    RADIX_SORT_ITERATION_INDEX_BLOCK(tmp, arr, 0, 56, idx[j], tdx[i])
 }
 
 /**
