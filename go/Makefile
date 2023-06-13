@@ -50,10 +50,12 @@ endif
 export PATH := $(GOPATH)/bin:$(PATH)
 
 # Common commands
-GO=GOPATH=$(GOPATH) GOPRIVATE=$(CVSPATH) go
-GOFMT=GOPATH=$(GOPATH) gofmt
-GOTEST=GOPATH=$(GOPATH) gotest
-GODOC=GOPATH=$(GOPATH) godoc
+GO=GOPATH=$(GOPATH) GOPRIVATE=$(CVSPATH) $(shell which go)
+GOFMT=$(shell which gofmt)
+GOTEST=GOPATH=$(GOPATH) $(shell which gotest)
+GODOC=GOPATH=$(GOPATH) $(shell which godoc)
+GOLANGCILINT=$(BINUTIL)/golangci-lint
+GOLANGCILINTVERSION=v1.53.2
 
 # Directory containing the source code
 SRCDIR=./src
@@ -105,7 +107,7 @@ coverage: ensuretarget
 # Get the test dependencies
 .PHONY: deps
 deps: ensuretarget
-	curl --silent --show-error --fail --location https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) v1.52.2
+	curl --silent --show-error --fail --location https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) $(GOLANGCILINTVERSION)
 	$(GO) install github.com/rakyll/gotest
 	$(GO) install github.com/jstemmer/go-junit-report
 
@@ -131,7 +133,7 @@ format:
 # Execute multiple linter tools
 .PHONY: linter
 linter:
-	$(BINUTIL)/golangci-lint run $(SRCDIR)/...
+	$(GOLANGCILINT) run $(SRCDIR)/...
 
 .PHONY: mod
 mod:
