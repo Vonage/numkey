@@ -155,7 +155,7 @@ mod:
 .PHONY: modupdate
 modupdate:
 	# $(GO) get $(shell $(GO) list -f '{{if not (or .Main .Indirect)}}{{.Path}}{{end}}' -m all)
-	$(GO) get -t -u -d ./... && go mod tidy -compat=$(shell grep -oP 'go \K[0-9]+\.[0-9]+' go.mod)
+	$(GO) get -t -u -d ./... && go mod tidy -compat=$(shell grep -oP 'go \K[0-9]+\.[0-9]+' ../go.mod)
 
 # Run all tests and static analysis tools
 .PHONY: qa
