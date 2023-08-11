@@ -87,12 +87,20 @@ help:
 	@echo "    make test     : Run unit tests"
 	@echo ""
 	@echo "Use DEVMODE=LOCAL for human friendly output."
+	@echo ""
 	@echo "To test and build everything from scratch:"
-	@echo "DEVMODE=LOCAL make format clean mod deps qa"
+	@echo "    DEVMODE=LOCAL make format clean mod deps qa"
+	@echo "or use the shortcut:"
+	@echo "    make x"
 	@echo ""
 
 # Alias for help target
-all: clean mod deps qa
+all: help
+
+# Alias to test and build everything from scratch
+.PHONY: x
+x:
+	DEVMODE=LOCAL $(MAKE) format clean mod deps qa
 
 # Remove any build artifact
 .PHONY: clean
