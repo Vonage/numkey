@@ -77,19 +77,31 @@ help:
 	@echo "GOPATH=$(GOPATH)"
 	@echo "The following commands are available:"
 	@echo ""
-	@echo "    make clean    : Remove any build artifact"
-	@echo "    make coverage : Generate the coverage report"
-	@echo "    make deps     : Get dependencies"
-	@echo "    make format   : Format the source code"
-	@echo "    make linter   : Check code against multiple linters"
-	@echo "    make mod      : Download dependencies"
-	@echo "    make qa       : Run all tests and static analysis tools"
-	@echo "    make test     : Run unit tests"
+	@echo "    make clean     : Remove any build artifact"
+	@echo "    make coverage  : Generate the coverage report"
+	@echo "    make deps      : Get dependencies"
+	@echo "    make format    : Format the source code"
+	@echo "    make linter    : Check code against multiple linters"
+	@echo "    make mod       : Download dependencies"
+	@echo "    make modupdate : Update dependencies"
+	@echo "    make qa        : Run all tests and static analysis tools"
+	@echo "    make test      : Run unit tests"
 	@echo ""
 	@echo "Use DEVMODE=LOCAL for human friendly output."
-	@echo "To test and build everything from scratch:"
-	@echo "DEVMODE=LOCAL make format clean mod deps qa"
 	@echo ""
+	@echo "To test and build everything from scratch:"
+	@echo "    DEVMODE=LOCAL make format clean mod deps qa"
+	@echo "or use the shortcut:"
+	@echo "    make x"
+	@echo ""
+
+# Alias for help target
+all: help
+
+# Alias to test and build everything from scratch
+.PHONY: x
+x:
+	DEVMODE=LOCAL $(MAKE) format clean mod deps qa
 
 # Alias for help target
 all: clean mod deps qa
@@ -138,6 +150,12 @@ linter:
 .PHONY: mod
 mod:
 	$(GO) mod download all
+
+# Update dependencies
+.PHONY: modupdate
+modupdate:
+	# $(GO) get $(shell $(GO) list -f '{{if not (or .Main .Indirect)}}{{.Path}}{{end}}' -m all)
+	$(GO) get -t -u -d ./... && go mod tidy -compat=$(shell grep -oP 'go \K[0-9]+\.[0-9]+' go.mod)
 
 # Run all tests and static analysis tools
 .PHONY: qa
