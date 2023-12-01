@@ -1,0 +1,17 @@
+site_name: numkey
+site_description: numkey
+site_author: vonage
+repo_url: https://github.com/vonage/numkey
+edit_uri: 'edit/main/docs/documentation'
+copyright: "© Vonage"
+docs_dir: "documentation"
+
+nav:
+  - Introduction: index.md
+
+markdown_extensions:
+  - pymdownx.snippets:
+      base_path: [".", ".."]
+      
+plugins:
+  - techdocs-core
