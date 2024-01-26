@@ -51,11 +51,12 @@ export PATH := $(GOPATH)/bin:$(PATH)
 
 # Common commands
 GO=GOPATH=$(GOPATH) GOPRIVATE=$(CVSPATH) $(shell which go)
+GOVERSION=${shell go version | grep -Po '(go[0-9]+.[0-9]+)'}
 GOFMT=$(shell which gofmt)
 GOTEST=GOPATH=$(GOPATH) $(shell which gotest)
 GODOC=GOPATH=$(GOPATH) $(shell which godoc)
 GOLANGCILINT=$(BINUTIL)/golangci-lint
-GOLANGCILINTVERSION=v1.53.3
+GOLANGCILINTVERSION=v1.55.2
 
 # Directory containing the source code
 SRCDIR=./src
