@@ -66,7 +66,7 @@ func encodeNumber(number string) uint64 {
 	size := len(number)
 	if size > NumMaxLen {
 		number = number[(size - NumMaxLen):size] // last 15 digits
-		size = 0                                 // flag non-revesible encoding
+		size = 0                                 // flag non-reversible encoding
 	}
 	num, err := strconv.ParseUint(number, 10, 64)
 	if err != nil {
