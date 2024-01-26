@@ -67,7 +67,7 @@ function encodeNumber(number) {
     var len = size;
     if (size > NKNUMMAXLEN) {
         j = (size - NKNUMMAXLEN); // last 15 digits
-        len = 0; // flag non-revesible encoding
+        len = 0; // flag non-reversible encoding
     }
     for (i = j; i < size; i++) {
         b = (number.charCodeAt(i) - NKZEROSHIFT);

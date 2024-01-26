@@ -73,7 +73,7 @@ public class NumKey {
         int len = number.length;
         if (len > NKNUMMAXLEN) {
             j = (len - NKNUMMAXLEN); // last 15 digits
-            len = 0;                 // flag non-revesible encoding
+            len = 0;                 // flag non-reversible encoding
         }
         for (i = j; i < number.length; i++) {
             b = (int) number[i] - '0';
