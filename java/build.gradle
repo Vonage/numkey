@@ -17,9 +17,10 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit test framework
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
 
-    // Use JUnitParams
-    testImplementation 'pl.pragmatists:JUnitParams:1.1.1'
+tasks.named("test", Test.class).configure {
+    useJUnitPlatform()
 }
