@@ -1,6 +1,6 @@
 # MAKEFILE
 #
-# @author      Nicola Asuni <info@tecnick.com>
+# @author      Nicola Asuni
 # @link        https://github.com/Vonage/numkey
 # ------------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ PATHDEBPKG=$(CURRENTDIR)/target/DEB
 .PHONY: 
 help:
 	@echo ""
-	@echo "$(PROJECT) Makefile."
+	@echo "$(PROJECT) C Makefile."
 	@echo "The following commands are available:"
 	@echo ""
 	@echo "    make build     : Build the library"

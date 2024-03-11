@@ -1,6 +1,6 @@
 # MAKEFILE
 #
-# @author      Nicola Asuni <info@tecnick.com>
+# @author      Nicola Asuni
 # @link        https://github.com/Vonage/numkey
 # ------------------------------------------------------------------------------
 
@@ -15,9 +15,6 @@ VERSION=$(shell cat ../VERSION)
 
 # Project release number (packaging build number)
 RELEASE=$(shell cat ../RELEASE)
-
-# Current directory
-CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 # --- MAKE TARGETS ---
 

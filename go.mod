@@ -2,6 +2,8 @@ module github.com/Vonage/numkey
 
 go 1.22
 
+toolchain go1.22.1
+
 require (
 	github.com/jstemmer/go-junit-report v1.0.0
 	github.com/rakyll/gotest v0.0.6

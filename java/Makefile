@@ -1,17 +1,20 @@
 # MAKEFILE
 #
-# @author      Nicola Asuni <nicola.asuni@vonage.com>
+# @author      Nicola Asuni
 # @link        https://github.com/Vonage/numkey
 # ------------------------------------------------------------------------------
 
 SHELL=/bin/bash
 .SHELLFLAGS=-o pipefail -c
 
+# Project name
+PROJECT=numkey
+
 # Display general help about this command
 .PHONY: help
 help:
 	@echo ""
-	@echo "NumKey Java Makefile."
+	@echo "$(PROJECT) Java Makefile."
 	@echo "The following commands are available:"
 	@echo ""
 	@echo "    make build        : Build the library"

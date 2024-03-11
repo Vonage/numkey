@@ -1,6 +1,6 @@
 # MAKEFILE
 #
-# @author      Nicola Asuni <info@tecnick.com>
+# @author      Nicola Asuni
 # @link        https://github.com/Vonage/numkey
 # ------------------------------------------------------------------------------
 
@@ -13,9 +13,6 @@ OWNER=Vonage
 # Project vendor
 VENDOR=${OWNER}
 
-# Lowercase VENDOR name for Docker
-LCVENDOR=$(shell echo "${VENDOR}" | tr '[:upper:]' '[:lower:]')
-
 # CVS path (path to the parent dir containing the project)
 CVSPATH=github.com/${VENDOR}
 
@@ -27,9 +24,6 @@ VERSION=$(shell cat ../VERSION)
 
 # Project release number (packaging build number)
 RELEASE=$(shell cat ../RELEASE)
-
-# Name of RPM or DEB package
-PKGNAME=${LCVENDOR}-${PROJECT}
 
 # Current directory
 CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
@@ -74,7 +68,7 @@ endif
 .PHONY: help
 help:
 	@echo ""
-	@echo "$(PROJECT) Makefile."
+	@echo "$(PROJECT) Go Makefile."
 	@echo "GOPATH=$(GOPATH)"
 	@echo "The following commands are available:"
 	@echo ""
