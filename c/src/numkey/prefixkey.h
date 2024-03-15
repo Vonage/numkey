@@ -35,7 +35,7 @@
 static inline uint64_t prefixkey(const char *number, size_t size)
 {
     uint64_t num = 0;
-    uint8_t b;
+    uint8_t b = 0;
     size_t i = 0;
     if (size > PKNUMMAXLEN)
     {

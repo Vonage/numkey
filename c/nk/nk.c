@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
 {
     if (argc != 3)
     {
-        fprintf(stderr, "NumKey Encoder %s\nUsage: nk COUNTRY NUMBER\n", VERSION);
+        (void) fprintf(stderr, "NumKey Encoder %s\nUsage: nk COUNTRY NUMBER\n", VERSION);
         return 1;
     }
-    fprintf(stdout, "%016" PRIx64, numkey(argv[1], argv[2], strlen(argv[2])));
+    (void) fprintf(stdout, "%016" PRIx64, numkey(argv[1], argv[2], strlen(argv[2])));
 }

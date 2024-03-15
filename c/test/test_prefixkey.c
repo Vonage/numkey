@@ -9,14 +9,9 @@
 
 // Test for prefixey
 
-#if __STDC_VERSION__ >= 199901L
-#define _XOPEN_SOURCE 600
-#else
-#define _XOPEN_SOURCE 500
-#endif
-
-#include <stdio.h>
 #include <inttypes.h>
+#include <stdio.h>
+#include <string.h>
 #include <time.h>
 #include "../src/numkey/prefixkey.h"
 
@@ -51,21 +46,21 @@ static const test_prefixkey_data_t test_prefixkey_data[] =
 uint64_t get_time()
 {
     struct timespec t;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &t);
+    (void) timespec_get(&t, TIME_UTC);
     return (((uint64_t)t.tv_sec * 1000000000) + (uint64_t)t.tv_nsec);
 }
 
 int test_prefixkey()
 {
     int errors = 0;
-    int i;
-    uint64_t pk;
+    int i = 0;
+    uint64_t pk = 0;
     for (i=0 ; i < k_prefixkey_test_size; i++)
     {
         pk = prefixkey(test_prefixkey_data[i].number, strlen(test_prefixkey_data[i].number));
         if (pk != test_prefixkey_data[i].pk)
         {
-            fprintf(stderr, "%s (%d): Unexpected prefixkey: expected 0x%016" PRIx64 ", got 0x%016" PRIx64 "\n", __func__, i, test_prefixkey_data[i].pk, pk);
+            (void) fprintf(stderr, "%s (%d): Unexpected prefixkey: expected 0x%016" PRIx64 ", got 0x%016" PRIx64 "\n", __func__, i, test_prefixkey_data[i].pk, pk);
             ++errors;
         }
     }
@@ -74,8 +69,8 @@ int test_prefixkey()
 
 void benchmark_prefixkey()
 {
-    uint64_t tstart, tend;
-    int i;
+    uint64_t tstart = 0, tend = 0;
+    int i = 0;
     int size = 100000;
     tstart = get_time();
     for (i=0 ; i < size; i++)
@@ -83,7 +78,7 @@ void benchmark_prefixkey()
         prefixkey("123456789012345", 15);
     }
     tend = get_time();
-    fprintf(stdout, " * %s : %lu ns/op\n", __func__, (tend - tstart)/size);
+    (void) fprintf(stdout, " * %s : %lu ns/op\n", __func__, (tend - tstart)/size);
 }
 
 int main()

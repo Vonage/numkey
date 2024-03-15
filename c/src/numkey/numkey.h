@@ -82,8 +82,8 @@ static inline uint64_t encode_country(const char *country)
  */
 static inline void decode_country(uint64_t nk, char *country)
 {
-    country[0] = (char)((nk & NKBMASK_COUNTRY_FL) >> NKBSHIFT_COUNTRY_FL) + NKCSHIFT_CHAR;
-    country[1] = (char)((nk & NKBMASK_COUNTRY_SL) >> NKBSHIFT_COUNTRY_SL) + NKCSHIFT_CHAR;
+    country[0] = (char)(((nk & NKBMASK_COUNTRY_FL) >> NKBSHIFT_COUNTRY_FL) + NKCSHIFT_CHAR);
+    country[1] = (char)(((nk & NKBMASK_COUNTRY_SL) >> NKBSHIFT_COUNTRY_SL) + NKCSHIFT_CHAR);
     country[2] = 0;
 }
 
@@ -98,8 +98,8 @@ static inline void decode_country(uint64_t nk, char *country)
 static inline uint64_t encode_number(const char *number, size_t size)
 {
     uint64_t num = 0;
-    uint8_t b;
-    size_t i, j = 0;
+    uint8_t b = 0;
+    size_t i = 0, j = 0;
     uint64_t len = (uint64_t)(size);
     if (size > NKNUMMAXLEN)
     {
@@ -127,11 +127,11 @@ static inline size_t decode_number(uint64_t nk, char *number)
     size_t size = (size_t)(nk & NKBMASK_LENGTH);
     uint64_t num = ((nk & NKBMASK_NUMBER) >> NKBSHIFT_NUMBER);
     int rem = 0;
-    int i;
-    for (i = (size - 1); i >= 0; i--)
+    int i = 0;
+    for (i = (int)(size - 1); i >= 0; i--)
     {
-        rem = (num % 10);
-        number[i] = (rem + '0');
+        rem = (int)(num % 10);
+        number[i] = (char)(rem + '0');
         num = (num / 10);
     }
     number[size] = 0;
@@ -166,7 +166,7 @@ static inline void decode_numkey(uint64_t nk, numkey_t *data)
 
 static inline int8_t compare_uint64_t(uint64_t a, uint64_t b)
 {
-    return (a < b) ? -1 : (a > b);
+    return (a < b) ? -1 : (a > b); //NOLINT:bugprone-narrowing-conversions,cppcoreguidelines-narrowing-conversions
 }
 
 /**
