@@ -9,12 +9,6 @@
 
 // Test for countrykey
 
-#if __STDC_VERSION__ >= 199901L
-#define _XOPEN_SOURCE 600
-#else
-#define _XOPEN_SOURCE 500
-#endif
-
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
@@ -713,12 +707,12 @@ static const test_countrykey_data_t test_countrykey_data[] =
 // generate the test map
 void gentestmap()
 {
-    int i;
-    uint16_t ck;
+    int i = 0;
+    uint16_t ck = 0;
     for (i=0 ; i < k_countrykey_test_size; i++)
     {
         ck = countrykey(test_countrykey_data[i].country);
-        fprintf(stderr, "{\"%s\", %d},\n", test_countrykey_data[i].country, ck);
+        (void) fprintf(stderr, "{\"%s\", %d},\n", test_countrykey_data[i].country, ck);
     }
 }
 
@@ -726,21 +720,21 @@ void gentestmap()
 uint64_t get_time()
 {
     struct timespec t;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &t);
+    (void) timespec_get(&t, TIME_UTC);
     return (((uint64_t)t.tv_sec * 1000000000) + (uint64_t)t.tv_nsec);
 }
 
 int test_countrykey()
 {
     int errors = 0;
-    int i;
-    uint16_t ck;
+    int i = 0;
+    uint16_t ck = 0;
     for (i=0 ; i < k_countrykey_test_size; i++)
     {
         ck = countrykey(test_countrykey_data[i].country);
         if (ck != test_countrykey_data[i].ck)
         {
-            fprintf(stderr, "%s (%d): Unexpected countrykey: expected %d, got %d\n", __func__, i, test_countrykey_data[i].ck, ck);
+            (void) fprintf(stderr, "%s (%d): Unexpected countrykey: expected %d, got %d\n", __func__, i, test_countrykey_data[i].ck, ck);
             ++errors;
         }
     }
@@ -749,8 +743,8 @@ int test_countrykey()
 
 void benchmark_countrykey()
 {
-    uint64_t tstart, tend;
-    int i;
+    uint64_t tstart = 0, tend = 0;
+    int i = 0;
     int size = 100000;
     tstart = get_time();
     for (i=0 ; i < size; i++)
@@ -758,20 +752,20 @@ void benchmark_countrykey()
         countrykey("ZZ");
     }
     tend = get_time();
-    fprintf(stdout, " * %s : %lu ns/op\n", __func__, (tend - tstart)/size);
+    (void) fprintf(stdout, " * %s : %lu ns/op\n", __func__, (tend - tstart)/size);
 }
 
 int test_decode_countrykey()
 {
     int errors = 0;
-    int i;
+    int i = 0;
     char h[3];
     for (i=0 ; i < k_countrykey_test_size; i++)
     {
         decode_countrykey(test_countrykey_data[i].ck, h);
         if (strcmp(h, test_countrykey_data[i].country) != 0)
         {
-            fprintf(stderr, "%s (%d): Unexpected country: expected %s, got %s\n", __func__, i, test_countrykey_data[i].country, h);
+            (void) fprintf(stderr, "%s (%d): Unexpected country: expected %s, got %s\n", __func__, i, test_countrykey_data[i].country, h);
             ++errors;
         }
     }
@@ -781,8 +775,8 @@ int test_decode_countrykey()
 void benchmark_decode_countrykey()
 {
     char h[3];
-    uint64_t tstart, tend;
-    int i;
+    uint64_t tstart = 0, tend = 0;
+    int i = 0;
     int size = 100000;
     tstart = get_time();
     for (i=0 ; i < size; i++)
@@ -790,7 +784,7 @@ void benchmark_decode_countrykey()
         decode_countrykey(23130, h);
     }
     tend = get_time();
-    fprintf(stdout, " * %s : %lu ns/op\n", __func__, (tend - tstart)/size);
+    (void) fprintf(stdout, " * %s : %lu ns/op\n", __func__, (tend - tstart)/size);
 }
 
 int main()
