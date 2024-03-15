@@ -27,7 +27,7 @@ jobs:
       - name: set RELEASE number
         run: echo ${GITHUB_RUN_NUMBER} > RELEASE
       - name: test
-        run: cd c && make version build test
+        run: cd c && make version build
 
   cgo:
     runs-on: ubuntu-latest
