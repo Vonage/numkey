@@ -28,10 +28,9 @@ all: clean format test build
 
 # Build a minified version of the library
 .PHONY: build
-build:
+build: test
 	@mkdir -p target/build
-	uglifyjs --compress --keep-fnames --comments --output target/build/numkey.js src/numkey.js 
-	cd test && node test_numkey.js '../target/build/numkey.js'
+	uglifyjs --compress --keep-fnames --comments --output target/build/numkey.js src/numkey.js
 
 # Remove any build artifact
 .PHONY: clean

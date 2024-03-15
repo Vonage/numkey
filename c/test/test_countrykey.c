@@ -3,8 +3,7 @@
 // test_countrykey.c
 //
 // @category   Tools
-// @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2019-2022 Vonage
+// @author     Nicola Asuni
 // @license    see LICENSE file
 // @lick       https://github.com/Vonage/countrykey
 

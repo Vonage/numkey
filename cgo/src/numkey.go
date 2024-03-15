@@ -2,8 +2,7 @@
 // 64 bit Encoding for Short Codes and E.164 LVN.
 //
 // @category   Libraries
-// @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2019-2022 Vonage
+// @author     Nicola Asuni
 // @license    see LICENSE file
 // @link       https://github.com/Vonage/numkey
 package numkey

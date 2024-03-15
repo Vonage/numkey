@@ -2,7 +2,7 @@
 
 # test_numkey.py
 # @category   Libraries
-# @author     Nicola Asuni <nicola.asuni@vonage.com>
+# @author     Nicola Asuni
 # @copyright  2019 Vonage
 # @license    see LICENSE file
 # @link       https://github.com/Vonage/numkey

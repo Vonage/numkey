@@ -3,43 +3,42 @@
  * numkey.js
  * 
  * @category   Libraries
- * @author     Nicola Asuni <nicola.asuni@vonage.com>
- * @copyright  2019-2020 Vonage
+ * @author     Nicola Asuni
  * @license    see LICENSE file
  * @link       https://github.com/Vonage/numkey
  */
 
 // NOTE: Javascript numbers are 64 bit floats with a 53 bit precision.
 
-var NKBMASK_COUNTRY_FL = 0xF8000000 //!< Bit mask for the ISO 3166 alpha-2 country code first letter  [ 11111000 00000000 00000000 00000000 ]
-var NKBMASK_COUNTRY_SL = 0x07C00000 //!< Bit mask for the ISO 3166 alpha-2 country code second letter [ 00000111 11000000 00000000 00000000 ]
+const NKBMASK_COUNTRY_FL = 0xF8000000 //!< Bit mask for the ISO 3166 alpha-2 country code first letter  [ 11111000 00000000 00000000 00000000 ]
+const NKBMASK_COUNTRY_SL = 0x07C00000 //!< Bit mask for the ISO 3166 alpha-2 country code second letter [ 00000111 11000000 00000000 00000000 ]
 
-var NKBMASK_NUMBER_HI = 0x003FFFFF //!< Bit mask for the hi part of short code or E.164 number (max 15 digits)  [ 00000000 00111111 11111111 11111111 ]
-var NKBMASK_NUMBER_LO = 0xFFFFFFF0 //!< Bit mask for the lo part of short code or E.164 number (max 15 digits)  [ 11111111 11111111 11111111 11110000 ]
+const NKBMASK_NUMBER_HI = 0x003FFFFF //!< Bit mask for the hi part of short code or E.164 number (max 15 digits)  [ 00000000 00111111 11111111 11111111 ]
+const NKBMASK_NUMBER_LO = 0xFFFFFFF0 //!< Bit mask for the lo part of short code or E.164 number (max 15 digits)  [ 11111111 11111111 11111111 11110000 ]
 
-var NKBMASK_32 = 0xFFFFFFFF //!< 32-Bit mask [ 11111111 11111111 11111111 11111111 ]
+const NKBMASK_32 = 0xFFFFFFFF //!< 32-Bit mask [ 11111111 11111111 11111111 11111111 ]
 
-var NKBMASK_LENGTH = 0x0000000F //!< Bit mask for the number length [ 00000000 00000000 00000000 00001111 ]
+const NKBMASK_LENGTH = 0x0000000F //!< Bit mask for the number length [ 00000000 00000000 00000000 00001111 ]
 
-var NKBSHIFT_COUNTRY_FL = 27 //!< COUNTRY first letter LSB position from the NumKey LSB
-var NKBSHIFT_COUNTRY_SL = 22 //!< COUNTRY second letter LSB position from the NumKey LSB
+const NKBSHIFT_COUNTRY_FL = 27 //!< COUNTRY first letter LSB position from the NumKey LSB
+const NKBSHIFT_COUNTRY_SL = 22 //!< COUNTRY second letter LSB position from the NumKey LSB
 
-var NKBSHIFT_NUMBER_HI = 10 //!< NUMBER MSB position from the NumKey MSB
-var NKBSHIFT_NUMBER_LO = 4 //!< NUMBER LSB position from the NumKey LSB
+const NKBSHIFT_NUMBER_HI = 10 //!< NUMBER MSB position from the NumKey MSB
+const NKBSHIFT_NUMBER_LO = 4 //!< NUMBER LSB position from the NumKey LSB
 
-var NKSLENGTH_COUNTRY = 3 //!< Number of characters in the country code + NULL terminator
-var NKSLENGTH_NUMBER = 16 //!< Number of characters in the number code + NULL terminator
+const NKSLENGTH_COUNTRY = 3 //!< Number of characters in the country code + NULL terminator
+const NKSLENGTH_NUMBER = 16 //!< Number of characters in the number code + NULL terminator
 
-var NKCSHIFT_CHAR = 64 //!< Value shift to encode characters to numbers (A=1, ..., Z=26)
+const NKCSHIFT_CHAR = 64 //!< Value shift to encode characters to numbers (A=1, ..., Z=26)
 
-var NKNUMDIV = 0x10000000 //!< = [2^28] divider to get the number HI bits
-var NKNUMMUL = 0x100000000 //!< = [2^32] multiplier to set the number HI bits
+const NKNUMDIV = 0x10000000 //!< = [2^28] divider to get the number HI bits
+const NKNUMMUL = 0x100000000 //!< = [2^32] multiplier to set the number HI bits
 
-var NKZEROSHIFT = 48 //!< ASCII code of the '0' character
+const NKZEROSHIFT = 48 //!< ASCII code of the '0' character
 
-var NKNUMMAXLEN = 15 //!< Maximum number length for E.164 and key reversibility
+const NKNUMMAXLEN = 15 //!< Maximum number length for E.164 and key reversibility
 
-var PKNUMMAXLEN = 15 //!< Maximum number of digits to store for the prefixkey.
+const PKNUMMAXLEN = 15 //!< Maximum number of digits to store for the prefixkey.
 
 function encodeChar(c) {
     return ((c - NKCSHIFT_CHAR) >>> 0)
@@ -54,7 +53,7 @@ function decodeCountry(nk) {
 }
 
 function encodeNumber(number) {
-    var size = number.length;
+    const size = number.length;
     if (size < 1) {
         return {
             "hi": 0,
@@ -80,13 +79,13 @@ function encodeNumber(number) {
 }
 
 function decodeNumber(nk) {
-    var size = (nk.lo & NKBMASK_LENGTH) >>> 0;
+    const size = (nk.lo & NKBMASK_LENGTH) >>> 0;
     if (size == 0) {
         return "";
     }
-    var number = new Array(size);
-    var numhi = ((nk.hi & NKBMASK_NUMBER_HI) >>> 0);
-    var numlo = ((nk.lo & NKBMASK_NUMBER_LO) >>> 0);
+    const number = new Array(size);
+    const numhi = ((nk.hi & NKBMASK_NUMBER_HI) >>> 0);
+    const numlo = ((nk.lo & NKBMASK_NUMBER_LO) >>> 0);
     var num = ((numhi >>> NKBSHIFT_NUMBER_LO) * NKNUMMUL) + (((numhi << (32 - NKBSHIFT_NUMBER_LO)) >>> 0) + (numlo >>> NKBSHIFT_NUMBER_LO));
     var rem = 0;
     var i;
@@ -99,7 +98,7 @@ function decodeNumber(nk) {
 }
 
 function numKey(country, number) {
-    var ne = encodeNumber(number);
+    const ne = encodeNumber(number);
     return {
         "hi": ((encodeCountry(country) | ne.hi) >>> 0),
         "lo": ne.lo

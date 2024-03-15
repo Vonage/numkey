@@ -3,8 +3,7 @@
 // prefixkey.h
 //
 // @category   Libraries
-// @author     Nicola Asuni <nicola.asuni@vonage.com>
-// @copyright  2022-2022 Vonage
+// @author     Nicola Asuni
 // @license    see LICENSE file
 // @link       https://github.com/Vonage/numkey
 
