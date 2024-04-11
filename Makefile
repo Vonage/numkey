@@ -19,9 +19,6 @@ RELEASE=$(shell cat RELEASE)
 # Current directory
 CURRENTDIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
-# Target directory
-TARGETDIR=$(CURRENTDIR)target
-
 # --- MAKE TARGETS ---
 
 # Display general help about this command
@@ -76,14 +73,12 @@ java:
 # Remove any build artifact
 .PHONY: clean
 clean:
-	rm -rf target
 	cd c && make clean
 	cd cgo && make clean
 	cd go && make clean
 	cd javascript && make clean
 	cd python && make clean
 	cd java && make clean
-	@mkdir -p $(TARGETDIR)
 
 # Tag the Git repository
 .PHONY: tag
