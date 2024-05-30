@@ -1,7 +1,5 @@
 ~#PKGNAME#~ (~#VERSION#~-~#RELEASE#~) UNRELEASED; urgency=low
 
-  * Please check the
-    https://github.com/Vonage/numkey
-    commit history
+  * https://github.com/Vonage/numkey/commits/main/
 
- -- Nicola Asuni  ~#DATE#~
+ -- Nicola Asuni <support@vonage.com>  ~#DATE#~
