@@ -15,4 +15,3 @@ Description: Numerical Encoding for Short Codes.
  Provides C header-only files for:
  NumKey, a reversible numerical encoding for Short Codes
  and E.164 numbers.
- 
