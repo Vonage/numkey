@@ -1,0 +1,71 @@
+{
+  "settingsInheritedFrom": "vonage-technology/whitesource-config@main",
+  "remediateSettings": {
+    "enableRenovate": true,
+    "extends": [
+      "config:best-practices",
+      "github>whitesource/merge-confidence:beta",
+      ":automergeMinor"
+    ],
+    "labels": ["mend"],
+    "dependencyDashboard": true,
+    "dependencyDashboardTitle": "Renovate Dashboard 🚧",
+    "dependencyDashboardOSVVulnerabilitySummary": "unresolved",
+    "timezone": "UTC",
+    "schedule": [
+      "before 5am every weekday",
+      "every weekend"
+    ],
+    "baseBranches": [
+      "main"
+    ],
+    "major": {
+      "dependencyDashboardApproval": true
+    },
+    "packageRules": [
+      {
+        "labels"  : [
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ]
+      },
+      {
+        "labels": [
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "pinDigest",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ]
+      }
+    ],
+    "minimumReleaseAge": "5 days",
+    "osvVulnerabilityAlerts": true,
+    "prHourlyLimit": 5,
+    "prConcurrentLimit": 10,
+    "separateMinorPatch": false,
+    "separateMultipleMajor": true,
+    "hostRules": [
+      {
+        "matchHost": "https://github.com/Vonage/",
+        "hostType": "github"
+      },
+      {
+        "matchHost": "https://github.com/vonage-technology/",
+        "hostType": "github"
+      }
+    ],
+    "postUpdateOptions": [
+      "gomodTidy"
+    ]
+  }
+}
