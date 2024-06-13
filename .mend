@@ -7,7 +7,6 @@
       "github>whitesource/merge-confidence:beta",
       ":automergeMinor"
     ],
-    "labels": ["mend"],
     "dependencyDashboard": true,
     "dependencyDashboardTitle": "Renovate Dashboard 🚧",
     "dependencyDashboardOSVVulnerabilitySummary": "unresolved",
@@ -20,32 +19,121 @@
       "main"
     ],
     "major": {
-      "dependencyDashboardApproval": true
+      "dependencyDashboardApproval": false
     },
     "packageRules": [
       {
-        "labels"  : [
+        "groupName": "Go (major)",
+        "groupSlug": "go-dependencies-major",
+        "labels": [
+          "mend",
           "minor release"
         ],
         "matchUpdateTypes": [
           "major"
+        ],
+        "matchManagers": [
+          "gomod"
         ]
       },
       {
+        "groupName": "Go (non-major)",
+        "groupSlug": "go-dependencies-non-major",
         "labels": [
+          "mend",
           "patch release"
         ],
         "matchUpdateTypes": [
           "minor",
           "patch",
           "pin",
-          "pinDigest",
           "digest",
           "lockFileMaintenance",
           "rollback",
           "bump",
           "replacement"
+        ],
+        "matchManagers": [
+          "gomod"
         ]
+      },
+      {
+        "groupName": "Docker (major)",
+        "groupSlug": "docker-dependencies-major",
+        "labels": [
+          "mend",
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "matchManagers": [
+          "docker"
+        ]
+      },
+      {
+        "groupName": "Docker (non-major)",
+        "groupSlug": "docker-dependencies-non-major",
+        "labels": [
+          "mend",
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ],
+        "matchManagers": [
+          "docker"
+        ]
+      },
+      {
+        "groupName": "CI/CD (major)",
+        "groupSlug": "ci-cd-dependencies-major",
+        "labels": [
+          "mend",
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "matchManagers": [
+          "ci",
+          "cd"
+        ]
+      },
+      {
+        "groupName": "CI/CD (non-major)",
+        "groupSlug": "ci-cd-dependencies-non-major",
+        "labels": [
+          "mend",
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ],
+        "matchManagers": [
+          "ci",
+          "cd"
+        ]
+      },
+      {
+        "matchUpdateTypes": [
+          "pinDigest"
+        ],
+        "enabled": false
       }
     ],
     "minimumReleaseAge": "5 days",
@@ -66,6 +154,9 @@
     ],
     "postUpdateOptions": [
       "gomodTidy"
-    ]
+    ],
+    "digest": {
+      "enabled": false
+    }
   }
 }
