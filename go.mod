@@ -2,7 +2,7 @@ module github.com/Vonage/numkey
 
 go 1.22
 
-toolchain go1.22.3
+toolchain go1.22.4
 
 require (
 	github.com/jstemmer/go-junit-report v1.0.0
