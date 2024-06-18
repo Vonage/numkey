@@ -1,0 +1,301 @@
+{
+  "settingsInheritedFrom": "vonage-technology/whitesource-config@main",
+  "remediateSettings": {
+    "enableRenovate": true,
+    "extends": [
+      "config:best-practices",
+      "github>whitesource/merge-confidence:beta",
+      ":automergeMinor"
+    ],
+    "dependencyDashboard": true,
+    "dependencyDashboardTitle": "Renovate Dashboard 🚧",
+    "dependencyDashboardOSVVulnerabilitySummary": "unresolved",
+    "timezone": "UTC",
+    "schedule": [
+      "before 5am every weekday",
+      "every weekend"
+    ],
+    "baseBranches": [
+      "main"
+    ],
+    "major": {
+      "dependencyDashboardApproval": false
+    },
+    "packageRules": [
+      {
+        "groupName": "C (major)",
+        "groupSlug": "c-dependencies-major",
+        "labels": [
+          "mend",
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "matchManagers": [
+          "c"
+        ]
+      },
+      {
+        "groupName": "C (non-major)",
+        "groupSlug": "c-dependencies-non-major",
+        "labels": [
+          "mend",
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ],
+        "matchManagers": [
+          "c"
+        ]
+      },
+      {
+        "groupName": "Go (major)",
+        "groupSlug": "go-dependencies-major",
+        "labels": [
+          "mend",
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "matchManagers": [
+          "gomod"
+        ]
+      },
+      {
+        "groupName": "Go (non-major)",
+        "groupSlug": "go-dependencies-non-major",
+        "labels": [
+          "mend",
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ],
+        "matchManagers": [
+          "gomod"
+        ]
+      },
+      {
+        "groupName": "Java (major)",
+        "groupSlug": "java-dependencies-major",
+        "labels": [
+          "mend",
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "matchManagers": [
+          "java"
+        ]
+      },
+      {
+        "groupName": "Java (non-major)",
+        "groupSlug": "java-dependencies-non-major",
+        "labels": [
+          "mend",
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ],
+        "matchManagers": [
+          "java"
+        ]
+      },
+      {
+        "groupName": "JS (major)",
+        "groupSlug": "js-dependencies-major",
+        "labels": [
+          "mend",
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "matchManagers": [
+          "js"
+        ]
+      },
+      {
+        "groupName": "JS (non-major)",
+        "groupSlug": "js-dependencies-non-major",
+        "labels": [
+          "mend",
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ],
+        "matchManagers": [
+          "js"
+        ]
+      },
+      {
+        "groupName": "Python (major)",
+        "groupSlug": "python-dependencies-major",
+        "labels": [
+          "mend",
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "matchManagers": [
+          "python"
+        ]
+      },
+      {
+        "groupName": "Python (non-major)",
+        "groupSlug": "python-dependencies-non-major",
+        "labels": [
+          "mend",
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ],
+        "matchManagers": [
+          "python"
+        ]
+      },
+      {
+        "groupName": "Docker (major)",
+        "groupSlug": "docker-dependencies-major",
+        "labels": [
+          "mend",
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "matchManagers": [
+          "docker"
+        ]
+      },
+      {
+        "groupName": "Docker (non-major)",
+        "groupSlug": "docker-dependencies-non-major",
+        "labels": [
+          "mend",
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ],
+        "matchManagers": [
+          "docker"
+        ]
+      },
+      {
+        "groupName": "CI/CD (major)",
+        "groupSlug": "ci-cd-dependencies-major",
+        "labels": [
+          "mend",
+          "minor release"
+        ],
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "matchManagers": [
+          "ci",
+          "cd"
+        ]
+      },
+      {
+        "groupName": "CI/CD (non-major)",
+        "groupSlug": "ci-cd-dependencies-non-major",
+        "labels": [
+          "mend",
+          "patch release"
+        ],
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest",
+          "lockFileMaintenance",
+          "rollback",
+          "bump",
+          "replacement"
+        ],
+        "matchManagers": [
+          "ci",
+          "cd"
+        ]
+      },
+      {
+        "matchUpdateTypes": [
+          "pinDigest"
+        ],
+        "enabled": false
+      }
+    ],
+    "minimumReleaseAge": "5 days",
+    "osvVulnerabilityAlerts": true,
+    "prHourlyLimit": 5,
+    "prConcurrentLimit": 10,
+    "separateMinorPatch": false,
+    "separateMultipleMajor": true,
+    "hostRules": [
+      {
+        "matchHost": "https://github.com/Vonage/",
+        "hostType": "github"
+      },
+      {
+        "matchHost": "https://github.com/vonage-technology/",
+        "hostType": "github"
+      }
+    ],
+    "postUpdateOptions": [
+      "gomodTidy"
+    ],
+    "digest": {
+      "enabled": false
+    }
+  }
