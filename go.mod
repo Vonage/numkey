@@ -5,7 +5,7 @@ go 1.22
 toolchain go1.22.4
 
 require (
-	github.com/jstemmer/go-junit-report v1.0.0
+	github.com/jstemmer/go-junit-report/v2 v2.1.0
 	github.com/rakyll/gotest v0.0.6
 )
 
