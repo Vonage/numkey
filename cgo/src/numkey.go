@@ -36,7 +36,7 @@ func castCNumKey(nk C.numkey_t) TNumKey {
 // StringToNTBytesN convert a string to byte array allocating "size" bytes.
 func StringToNTBytesN(s string, size int) []byte {
 	b := make([]byte, size)
-	copy(b[:], s)
+	copy(b, s)
 	return b
 }
 
@@ -73,7 +73,7 @@ func CompareNumKeyCountry(nka, nkb uint64) int {
 // Hex provides a 16 digits hexadecimal string representation of a 64bit unsigned number.
 func Hex(v uint64) string {
 	cstr := C.malloc(17)
-	defer C.free(unsafe.Pointer(cstr)) // #nosec
+	defer C.free(cstr)
 	C.numkey_hex(C.uint64_t(v), (*C.char)(cstr))
 	return C.GoStringN((*C.char)(cstr), C.int(16))
 }
@@ -109,7 +109,7 @@ func CountryKey(country string) uint16 {
 // DecodeCountryKey decodes countrykey into ISO 3166 alpha-2 country code.
 func DecodeCountryKey(ck uint16) string {
 	cstr := C.malloc(3)
-	defer C.free(unsafe.Pointer(cstr)) // #nosec
+	defer C.free(cstr)
 	C.decode_countrykey(C.uint16_t(ck), (*C.char)(cstr))
 	return C.GoStringN((*C.char)(cstr), C.int(2))
 }

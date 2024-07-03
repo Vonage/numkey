@@ -140,7 +140,7 @@ format:
 # Execute multiple linter tools
 .PHONY: linter
 linter:
-	$(GOLANGCILINT) run $(SRCDIR)/...
+	$(GOLANGCILINT) run --exclude-use-default=false --max-issues-per-linter 0 --max-same-issues 0 $(SRCDIR)/...
 
 .PHONY: mod
 mod:
