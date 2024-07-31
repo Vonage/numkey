@@ -90,7 +90,7 @@ help:
 	@echo ""
 
 # Alias for help target
-all: help
+all: x
 
 # Alias to test and build everything from scratch
 .PHONY: x
