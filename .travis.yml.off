@@ -59,4 +59,3 @@ matrix:
     - language: java
       script:
         - make java
-      
