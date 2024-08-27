@@ -136,14 +136,14 @@ static PyObject* py_decode_countrykey(PyObject *Py_UNUSED(ignored), PyObject *ar
 static PyMethodDef PyNumKeyMethods[] =
 {
     // NUMKEY
-    {"numkey", (PyCFunction)py_numkey, METH_VARARGS|METH_KEYWORDS, PYNUMKEY_DOCSTRING},
-    {"decode_numkey", (PyCFunction)py_decode_numkey, METH_VARARGS|METH_KEYWORDS, PYDECODENUMKEY_DOCSTRING},
-    {"compare_numkey_country", (PyCFunction)py_compare_numkey_country, METH_VARARGS|METH_KEYWORDS, PYCOMPARENUMKEYCOUNTRY_DOCSTRING},
-    {"numkey_hex", (PyCFunction)py_numkey_hex, METH_VARARGS|METH_KEYWORDS, PYNUMKEYHEX_DOCSTRING},
-    {"parse_numkey_hex", (PyCFunction)py_parse_numkey_hex, METH_VARARGS|METH_KEYWORDS, PYPARSENUMKEYSTRING_DOCSTRING},
-    {"prefixkey", (PyCFunction)py_prefixkey, METH_VARARGS|METH_KEYWORDS, PYPREFIXKEY_DOCSTRING},
-    {"countrykey", (PyCFunction)py_countrykey, METH_VARARGS|METH_KEYWORDS, COUNTRYKEY_DOCSTRING},
-    {"decode_countrykey", (PyCFunction)py_decode_countrykey, METH_VARARGS|METH_KEYWORDS, DECODECOUNTRYKEY_DOCSTRING},
+    {"numkey", (PyCFunction)(void(*)(void))py_numkey, METH_VARARGS|METH_KEYWORDS, PYNUMKEY_DOCSTRING},
+    {"decode_numkey", (PyCFunction)(void(*)(void))py_decode_numkey, METH_VARARGS|METH_KEYWORDS, PYDECODENUMKEY_DOCSTRING},
+    {"compare_numkey_country", (PyCFunction)(void(*)(void))py_compare_numkey_country, METH_VARARGS|METH_KEYWORDS, PYCOMPARENUMKEYCOUNTRY_DOCSTRING},
+    {"numkey_hex", (PyCFunction)(void(*)(void))py_numkey_hex, METH_VARARGS|METH_KEYWORDS, PYNUMKEYHEX_DOCSTRING},
+    {"parse_numkey_hex", (PyCFunction)(void(*)(void))py_parse_numkey_hex, METH_VARARGS|METH_KEYWORDS, PYPARSENUMKEYSTRING_DOCSTRING},
+    {"prefixkey", (PyCFunction)(void(*)(void))py_prefixkey, METH_VARARGS|METH_KEYWORDS, PYPREFIXKEY_DOCSTRING},
+    {"countrykey", (PyCFunction)(void(*)(void))py_countrykey, METH_VARARGS|METH_KEYWORDS, COUNTRYKEY_DOCSTRING},
+    {"decode_countrykey", (PyCFunction)(void(*)(void))py_decode_countrykey, METH_VARARGS|METH_KEYWORDS, DECODECOUNTRYKEY_DOCSTRING},
     {NULL, NULL, 0, NULL}
 };
 
