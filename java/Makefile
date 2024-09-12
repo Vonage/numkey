@@ -17,10 +17,10 @@ help:
 	@echo "$(PROJECT) Java Makefile."
 	@echo "The following commands are available:"
 	@echo ""
-	@echo "    make build        : Build the library"
-	@echo "    make clean        : Remove any build artifact"
-	@echo "    make test         : Run the unit tests against source code"
-	@echo "    make updategradle : Update gradle wrapper to the latest version"
+	@echo "  make build        : Build the library"
+	@echo "  make clean        : Remove any build artifact"
+	@echo "  make test         : Run the unit tests against source code"
+	@echo "  make updategradle : Update gradle wrapper to the latest version"
 	@echo ""
 
 all: clean build test
