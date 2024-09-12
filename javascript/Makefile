@@ -18,10 +18,10 @@ help:
 	@echo "Requires: node-js and uglify-js."
 	@echo "The following commands are available:"
 	@echo ""
-	@echo "    make build   : Build and test a minified version of the library"
-	@echo "    make clean   : Remove any build artifact"
-	@echo "    make format  : Format the source code"
-	@echo "    make test    : Run the unit tests against source code"
+	@echo "  make build  : Build and test a minified version of the library"
+	@echo "  make clean  : Remove any build artifact"
+	@echo "  make format : Format the source code"
+	@echo "  make test   : Run the unit tests against source code"
 	@echo ""
 
 all: clean format test build
