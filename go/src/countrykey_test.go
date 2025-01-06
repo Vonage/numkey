@@ -714,7 +714,7 @@ func TestCountryKey(t *testing.T) {
 func BenchmarkCountryKey(b *testing.B) {
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		CountryKey("ZZ")
 	}
 }
@@ -737,7 +737,7 @@ func TestDecodeCountryKey(t *testing.T) {
 func BenchmarkDecodeCountryKey(b *testing.B) {
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		DecodeCountryKey(23130)
 	}
 }

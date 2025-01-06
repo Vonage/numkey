@@ -766,7 +766,7 @@ func TestNumKeyLong(t *testing.T) {
 func BenchmarkNumKey(b *testing.B) {
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		NumKey("ZZ", "601469829912013")
 	}
 }
@@ -819,7 +819,7 @@ func TestDecodeNumKeyLong(t *testing.T) {
 func BenchmarkDecodeNumKey(b *testing.B) {
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		DecodeNumKey(0xd6a23089b8e15cdf)
 	}
 }
@@ -854,7 +854,7 @@ func TestCompareNumKeyCountry(t *testing.T) {
 func BenchmarkCompareNumKeyCountry(b *testing.B) {
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		CompareNumKeyCountry(0xd6a23089b8e15cdf, 0xd6a2300000000000)
 	}
 }
@@ -877,7 +877,7 @@ func TestHex(t *testing.T) {
 func BenchmarkHex(b *testing.B) {
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		_ = Hex(0xa852662880400000)
 	}
 }
@@ -902,7 +902,7 @@ func BenchmarkParseHex(b *testing.B) {
 
 	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		ParseHex(bs)
 	}
 }
