@@ -19,7 +19,7 @@ package numkey
 import "C"
 import "unsafe"
 
-// TNumKey contains the number components
+// TNumKey contains the number components.
 type TNumKey struct {
 	Country string `json:"country"`
 	Number  string `json:"number"`
@@ -37,21 +37,25 @@ func castCNumKey(nk C.numkey_t) TNumKey {
 func StringToNTBytesN(s string, size int) []byte {
 	b := make([]byte, size)
 	copy(b, s)
+
 	return b
 }
 
-// NumKey returns an encoded COUNTRY + NUMBER
-// If the country or number are invalid this function returns 0
+// NumKey returns an encoded COUNTRY + NUMBER.
+// If the country or number are invalid this function returns 0.
 func NumKey(country, number string) uint64 {
 	countrysize := len(country)
 	numsize := len(number)
+
 	if countrysize != 2 || numsize < 1 {
 		return 0
 	}
+
 	bcountry := StringToNTBytesN(country, countrysize+1)
 	bnumber := StringToNTBytesN(number, numsize+1)
 	pcountry := unsafe.Pointer(&bcountry[0]) // #nosec
 	pnumber := unsafe.Pointer(&bnumber[0])   // #nosec
+
 	return uint64(C.numkey((*C.char)(pcountry), (*C.char)(pnumber), C.size_t(numsize)))
 }
 
@@ -60,8 +64,11 @@ func DecodeNumKey(nk uint64) TNumKey {
 	if nk == 0 {
 		return TNumKey{}
 	}
+
 	var data C.numkey_t
+
 	C.decode_numkey(C.uint64_t(nk), &data)
+
 	return castCNumKey(data)
 }
 
@@ -73,8 +80,11 @@ func CompareNumKeyCountry(nka, nkb uint64) int {
 // Hex provides a 16 digits hexadecimal string representation of a 64bit unsigned number.
 func Hex(v uint64) string {
 	cstr := C.malloc(17)
+
 	defer C.free(cstr)
+
 	C.numkey_hex(C.uint64_t(v), (*C.char)(cstr))
+
 	return C.GoStringN((*C.char)(cstr), C.int(16))
 }
 
@@ -82,6 +92,7 @@ func Hex(v uint64) string {
 func ParseHex(s string) uint64 {
 	b := StringToNTBytesN(s, len(s)+1)
 	p := unsafe.Pointer(&b[0]) // #nosec
+
 	return uint64(C.parse_numkey_hex((*C.char)(p)))
 }
 
@@ -92,6 +103,7 @@ func PrefixKey(number string) uint64 {
 	numsize := len(number)
 	bnumber := StringToNTBytesN(number, numsize+1)
 	pnumber := unsafe.Pointer(&bnumber[0]) // #nosec
+
 	return uint64(C.prefixkey((*C.char)(pnumber), C.size_t(numsize)))
 }
 
@@ -101,15 +113,20 @@ func CountryKey(country string) uint16 {
 	if countrysize != 2 {
 		return 0
 	}
+
 	bcountry := StringToNTBytesN(country, countrysize+1)
 	pcountry := unsafe.Pointer(&bcountry[0]) // #nosec
+
 	return uint16(C.countrykey((*C.char)(pcountry)))
 }
 
 // DecodeCountryKey decodes countrykey into ISO 3166 alpha-2 country code.
 func DecodeCountryKey(ck uint16) string {
 	cstr := C.malloc(3)
+
 	defer C.free(cstr)
+
 	C.decode_countrykey(C.uint16_t(ck), (*C.char)(cstr))
+
 	return C.GoStringN((*C.char)(cstr), C.int(2))
 }
