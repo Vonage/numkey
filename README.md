@@ -168,7 +168,6 @@ These keys are not directly reversible and require a lookup-table.
 * Enable the usage ok key-value systems.
 * Enable the use of columnar data formats like *Apache Arrow* with the ability to perform fast binary searches.
 
-
 ----------
 
 <a name="quickstart"></a>
