@@ -8,7 +8,7 @@
 package numkey
 
 /*
-#cgo CFLAGS: -O3 -pedantic -std=c99 -Wextra -Wno-strict-prototypes -Wcast-align -Wundef -Wformat-security -Wshadow
+#cgo CFLAGS: -O3 -pedantic -std=c99 -Wextra -Wno-strict-prototypes -Wcast-align -Wundef -Wformat -Wformat-security -Wshadow
 #include <stdlib.h>
 #include <inttypes.h>
 #include "../../c/src/numkey/hex.h"
