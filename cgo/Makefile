@@ -47,7 +47,7 @@ export PATH := $(GOPATH)/bin:$(PATH)
 GO=GOPATH=$(GOPATH) GOPRIVATE=$(CVSPATH) $(shell which go)
 GOVERSION=${shell go version | grep -Po '(go[0-9]+.[0-9]+)'}
 GOFMT=$(shell which gofmt)
-GOTEST=GOPATH=$(GOPATH) $(shell which gotest)
+GOTEST=$(GO) test
 GODOC=GOPATH=$(GOPATH) $(shell which godoc)
 GOLANGCILINT=$(BINUTIL)/golangci-lint
 GOLANGCILINTVERSION=v2.4.0
