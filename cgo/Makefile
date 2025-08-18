@@ -115,7 +115,6 @@ coverage: ensuretarget
 .PHONY: deps
 deps: ensuretarget
 	curl --silent --show-error --fail --location https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BINUTIL) $(GOLANGCILINTVERSION)
-	$(GO) install github.com/jstemmer/go-junit-report/v2@latest
 
 # Create the trget directories if missing
 .PHONY: ensuretarget
@@ -142,7 +141,7 @@ linter:
 	$(GOLANGCILINT) run --max-issues-per-linter 0 --max-same-issues 0 $(SRCDIR)/...
 
 .PHONY: mod
-mod:
+mod: gotools
 	$(GO) mod download all
 
 # Run all tests and static analysis tools
@@ -163,6 +162,11 @@ test: ensuretarget
 	-coverprofile=target/report/coverage.out \
 	-v $(SRCDIR) $(TESTEXTRACMD)
 	@echo -e "\n\n>>> END: Unit Tests <<<\n\n"
+
+# Get the go tools
+.PHONY: gotools
+gotools:
+	$(GO) get -tool github.com/jstemmer/go-junit-report/v2@latest
 
 # Update everything
 .PHONY: updateall
@@ -186,4 +190,5 @@ updatelint:
 .PHONY: updatemod
 updatemod:
 	# $(GO) get $(shell $(GO) list -f '{{if not (or .Main .Indirect)}}{{.Path}}{{end}}' -m all)
-	$(GO) get -t -u ./... && go mod tidy -compat=$(shell grep -oP 'go \K[0-9]+\.[0-9]+' ../go.mod)
+	$(GO) get -t -u ./... && \
+	$(GO) mod tidy -compat=$(shell grep -oP 'go \K[0-9]+\.[0-9]+' ../go.mod)
