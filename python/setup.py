@@ -30,7 +30,7 @@ class RunTests(Command):
 
 setup(
     name="numkey",
-    version="1.6.57.1",
+    version="1.6.58.1",
     keywords=("numkey E.164 shortcode lvn did encoding"),
     description="NumKey Bindings for Python",
     long_description=read("../README.md"),
@@ -48,7 +48,7 @@ setup(
             extra_compile_args=[
                 "-O3",
                 "-pedantic",
-                "-std=c99",
+                "-std=c2x",
                 "-Wall",
                 "-Wextra",
                 "-Wno-strict-prototypes",

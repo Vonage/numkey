@@ -10,8 +10,8 @@ on:
 
 env:
   NODE_VERSION: 22
-  PYTHON_VERSION: 3.x
-  JAVA_VERSION: 17
+  PYTHON_VERSION: 3.13
+  JAVA_VERSION: 21
 
 permissions:
   contents: read

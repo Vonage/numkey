@@ -1,5 +1,3 @@
-// NumKey
-//
 // hex.h
 //
 // @category   Libraries
@@ -18,9 +16,12 @@
 #define NUMKEY_HEX_H
 
 #include <inttypes.h>
+#include <stdint.h>
 #include <stdio.h>
 
 /** @brief Returns uint64_t hexadecimal string (16 characters).
+ *
+ *
  *
  * @param n     Number to parse
  * @param str   String buffer to be returned (it must be sized 17 bytes at least).
@@ -36,6 +37,9 @@ static inline size_t hex_uint64_t(uint64_t n, char *str)
 }
 
 /** @brief Parses a 16 chars hexadecimal string and returns the code.
+ *
+ * This function parses a hexadecimal string and returns the corresponding
+ * unsigned integer number.
  *
  * @param s    Hexadecimal string to parse (it must contain 16 hexadecimal characters).
  *

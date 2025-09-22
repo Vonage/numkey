@@ -127,7 +127,7 @@ static PyObject* py_decode_countrykey(PyObject *Py_UNUSED(ignored), PyObject *ar
     if (!PyArg_ParseTupleAndKeywords(args, keywds, "h", kwlist, &ck))
         return NULL;
     char h[3];
-    decode_countrykey(ck, &h);
+    decode_countrykey(ck, h);
     return PyBytes_FromString(h);
 }
 

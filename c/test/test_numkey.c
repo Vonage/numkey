@@ -11,8 +11,8 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <strings.h>
 #include <inttypes.h>
+#include <stdint.h>
 #include <time.h>
 #include "../src/numkey/numkey.h"
 

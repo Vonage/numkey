@@ -1,19 +1,16 @@
-// NumKey
-//
 // test_hex.c
 //
 // @category   Test
 // @author     Nicola Asuni <info@tecnick.com>
-// @link       https://github.com/Vonage/variantkey
+// @link       https://github.com/tecnickcom/variantkey
 // @license    MIT [LICENSE](https://raw.githubusercontent.com/tecnickcom/variantkey/main/LICENSE)
 
 // Test for hex
 
-#include <errno.h>
 #include <inttypes.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <strings.h>
 #include <time.h>
 #include "../src/numkey/hex.h"
 
