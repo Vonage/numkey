@@ -18,6 +18,7 @@
 #define NUMKEY_PREFIXKEY_H
 
 #include <inttypes.h>
+#include <stdint.h>
 #include <stddef.h>
 
 #define PKNUMMAXLEN 15 //!< Maximum number of digits to store for the prefixkey.

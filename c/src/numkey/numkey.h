@@ -20,6 +20,7 @@
 #define NUMKEY_NUMKEY_H
 
 #include <inttypes.h>
+#include <stdint.h>
 #include <stddef.h>
 #include "hex.h"
 

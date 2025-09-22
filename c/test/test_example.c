@@ -2,9 +2,8 @@
 // https://github.com/Vonage/numkey
 
 #include <inttypes.h>
+#include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../src/numkey/numkey.h"
 
 int main()

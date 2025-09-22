@@ -1,5 +1,3 @@
-// NumKey
-//
 // test_set.c
 //
 // @category   Test
@@ -9,11 +7,9 @@
 
 // Test for set
 
-#include <errno.h>
 #include <inttypes.h>
+#include <stdint.h>
 #include <stdio.h>
-#include <string.h>
-#include <strings.h>
 #include <time.h>
 #include "../src/numkey/set.h"
 

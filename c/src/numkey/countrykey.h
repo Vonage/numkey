@@ -18,6 +18,7 @@
 #define NUMKEY_COUNTRYKEY_H
 
 #include <inttypes.h>
+#include <stdint.h>
 #include <stddef.h>
 
 /**
